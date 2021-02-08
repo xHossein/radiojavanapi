@@ -17,7 +17,7 @@ and much more else
 
 ## Install
 ```
-pip install git+https://github.com/xHossein/radiojavanapi
+pip install radiojavanapi
 ```
 <br>
 
