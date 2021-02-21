@@ -41,7 +41,7 @@ class ArtistMixin(PrivateRequest):
 
     def follow_artist(self, artist: Artist) -> bool:
         """
-        Follow a artist
+        Follow an artist
 
         Parameters
         ----------
@@ -59,7 +59,7 @@ class ArtistMixin(PrivateRequest):
 
     def unfollow_artist(self, artist: Artist) -> bool:
         """
-        UnFollow a artist
+        UnFollow an artist
 
         Parameters
         ----------

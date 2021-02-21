@@ -5,10 +5,10 @@ Support Python >= 3.6
 
 RadioJavan API valid for 8 February 2021 (last reverse-engineering check)
 
-# Features
+## Features
 * Get full info of a Song/Video/Podcast/Story/Playlist/Artist/Album/Account
 * Like/Unlike Song/Video/Podcast/Story
-* Follow/Unfollow a Artist/MusicPlaylist
+* Follow/Unfollow Artist or MusicPlaylist
 * Create/Rename/Delete a playlist and Add song/video to it or Remove from it
 * Edit/Deactive account
 * Upload/Remove profile photo
@@ -65,6 +65,7 @@ SearchResults | Result of search
 
 ## **Account**
 This is your authorized account
+
 Method | Return | Description | Login Require
 -------|--------|------------|------------
 Client() | bool | Init radiojavanapi client | NO
@@ -315,8 +316,8 @@ Method | Return | Description | Login Require
 -------|--------|------------|------------
 get_artist_by_url(url: str) | Artist | Return artist info by site url (radiojavan.com) | NO
 get_artist_by_name(name: int) | Artist | Return artist info by name (must be correct name) | NO
-follow_artist(artist: Artist) | bool | Follow a artist | YES
-unfollow_artist(artist: Artist) | bool | UnFollow a artist | YES
+follow_artist(artist: Artist) | bool | Follow an artist | YES
+unfollow_artist(artist: Artist) | bool | UnFollow an artist | YES
 
 <br>Example:
 ```bash
@@ -479,6 +480,8 @@ get_talk_podcasts() | List[Podcast] | Return list of talk podcasts | NO
 get_shows_podcasts() | List[Podcast] | Return list of shows podcasts | NO
 get_popular_artists() | List[Artist] | Return list of popular artists | NO
 get_coming_soon() | List[ComingSoon] | Return list of comingsoon songs/videos | NO
+get_radio_stream() | Dict | Return RJ radio stream links and short data of current and next songs | NO
+get_tv_stream() | str | Return RJ tv stream link | NO
 <br>
 
 ## **Common Exceptions**
