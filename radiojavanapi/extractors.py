@@ -1,7 +1,7 @@
 from radiojavanapi.helper import toInt
-from .types import (Account, Album, Artist, ComingSoon, Profile,
-                    Song, MusicPlaylist, Story, Video,
-                    Podcast,SearchResults,VideoPlaylist)
+from .types import (Account, Album, Artist, ComingSoon, Profile, Song,
+                    MusicPlaylist, Story, Video, ShortData,
+                    Podcast, SearchResults, VideoPlaylist)
 
 def extract_account(data) -> Account:
     data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
@@ -53,14 +53,41 @@ def extract_artist(data) -> Artist:
                             for playlist in data.pop('playlists')]
     return Artist(**data)
 
+def extract_short_data(data, type) -> ShortData:
+    if type == Song or type == Video:
+        data["name"] = data["song"]
+    
+    elif type == Album:
+        data["artist"] = data["album_artist"]
+        data["name"] = data["album_album"]
+      
+    elif type == Podcast:
+        data["artist"] = data["podcast_artist"]
+        data["name"] = data["title"]  
+        data["title"] = '{} - \"{}\"'.format(data["artist"], data["name"])
+        
+    elif type == MusicPlaylist:
+        data["name"] = data["title"]
+        data["title"] = '{} - \"{}\"'.format(data["name"], data["created_by"])
+        
+    elif type == 'show':
+        data["artist"] = data["date"]
+        data["name"] = data["show_title"]
+        data["title"] = '{} - \"{}\"'.format(data["artist"], data["name"])
+        data["permlink"] = data["show_permlink"]
+        
+    return ShortData(**data)
+
 def extract_search_results(data) -> SearchResults:
-    data["songs_id"] = [mp3["id"] for mp3 in data.pop('mp3s')]
-    data["albums_id"] = [album["id"] for album in data.pop('albums')]
-    data["videos_id"] = [video["id"] for video in data.pop('videos')]
-    data["podcasts_id"] = [podcasts["id"] for podcasts in data.pop('podcasts')]
-    data["playlists_id"] = [playlist["playlist"]["id"] 
-                            for playlist in data.pop('playlists')]
-    data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
+    data["songs"] = [extract_short_data(mp3, Song) for mp3 in data.pop('mp3s')]
+    data["albums"] = [extract_short_data(album, Album) for album in data.pop('albums')]
+    data["videos"] = [extract_short_data(video, Video) for video in data.pop('videos')]
+    data["podcasts"] = [extract_short_data(podcasts, Podcast) for podcasts in data.pop('podcasts')]
+    data["shows"] = [extract_short_data(show, 'show') for show in data.pop('shows')]
+    data["profiles"] = [extract_profile(profile) for profile in data.pop('profiles')]
+    data["artist_names"] = [artist["name"] for artist in data.pop('artists')]
+    data["music_playlists"] = [extract_short_data(playlist['playlist'], MusicPlaylist)
+                                                    for playlist in data.pop('playlists')]
     return SearchResults(**data)
 
 def extract_video_playlist(data) -> VideoPlaylist:

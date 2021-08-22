@@ -36,7 +36,7 @@ class ArtistMixin(PrivateRequest):
 
         """
         response = self.private_request(
-            'artist', params=f'query={name}').json()
+            'artist', params=f'query={name.replace(" ", "+")}').json()
         return extract_artist(response)
 
     def follow_artist(self, artist: Artist) -> bool:

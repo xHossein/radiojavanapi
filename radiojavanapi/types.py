@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 from pydantic import BaseModel, HttpUrl
 
 class Profile(BaseModel):
@@ -47,7 +47,6 @@ class Account(BaseModel):
     stories: List[Story] = []
 
 class RJBaseModel(BaseModel):
-    comments_link: HttpUrl
     created_at: str
     credit_tags: List[str] = []
     dislikes: int
@@ -123,17 +122,28 @@ class Artist(BaseModel):
     podcasts_id: List[int] = []
     playlists_id: List[str] = []
 
+class ShortData(BaseModel):
+    id: Union[int, str]
+    artist: Optional[str]
+    name: Optional[str]
+    created_at: str
+    permlink: Optional[str]
+    photo: HttpUrl
+    photo_player: HttpUrl
+    share_link: HttpUrl
+    title: str
+    
 class SearchResults(BaseModel):
     query: str
-    songs_id: List[int] = []
-    albums_id: List[int] = []
-    videos_id: List[int] = []
-    podcasts_id: List[int] = []
-    playlists_id: List[str] = []
-    artists_name: List[str] = []
-    lyrics: List = []
-    shows: List = []
-    profiles: List = []
+    songs: List[ShortData] = []
+    albums: List[ShortData] = []
+    videos: List[ShortData] = []
+    podcasts: List[ShortData] = []
+    music_playlists: List[ShortData] = []
+    shows: List[ShortData] = []
+    profiles: List[Profile] = []
+    artist_names: List[str] = []
+    
 
 class MusicPlaylist(BaseModel):
     id: str
@@ -188,8 +198,3 @@ class ComingSoon(BaseModel):
     share_link: HttpUrl
     html_link: HttpUrl
     photo: HttpUrl
-
-
-
-
-
