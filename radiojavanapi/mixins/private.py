@@ -1,10 +1,13 @@
-from json.decoder import JSONDecodeError
-import requests
-from requests_toolbelt.multipart.encoder import MultipartEncoder
 from radiojavanapi.constants import API_DOMAIN, BASE_HEADERS
-from radiojavanapi.exceptions import (BadCredentials, ClientJSONDecodeError, EmailExists,
-                                    ClientLoginRequired, LongString, NameExists, OnlyContainLetters, PlayListExists,
-                                    UnknownError, UsernameExists,ClientLoginRequired)
+from radiojavanapi.exceptions import (
+                BadCredentials, ClientJSONDecodeError, ClientConnectionError, DuplicatePasswords,
+                EmailExists, ClientLoginRequired, LongString, NameExists, OnlyContainLetters,
+                PlayListExists, UnknownError, UsernameExists, ClientLoginRequired, WrongId
+                )
+
+import requests
+from json.decoder import JSONDecodeError
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 class PrivateRequest():
     def __init__(self) -> None:
@@ -38,6 +41,10 @@ class PrivateRequest():
                                             )
             else:
                 response = self.private.get(API_DOMAIN.format(endpoint), params=params)
+                
+        except requests.exceptions.RequestException:
+            raise ClientConnectionError()
+        
         except Exception as e: # TO DO
             raise UnknownError(e)
         
@@ -52,42 +59,47 @@ class PrivateRequest():
             if msg:
                 if 'is too long' in msg:
                     raise LongString(msg)
-                if 'Invalid email' in msg:
+                elif 'Invalid email' in msg:
                     raise BadCredentials(msg)
-                if 'only contain letters' in msg:
+                elif 'only contain letters' in msg:
                     raise OnlyContainLetters(msg)
-                if 'already have that email' in msg:
+                elif 'already have that email' in msg:
                     raise EmailExists(msg)
-                if 'username is not available' in msg:
+                elif 'username is not available' in msg:
                     raise UsernameExists(msg)
-                if 'Name already exists.' == msg:
+                elif 'Name already exists.' == msg:
                     raise NameExists(msg)
-                if 'Playlist with this name already exists.' == msg:
+                elif 'Playlist with this name already exists.' == msg:
                     raise PlayListExists(msg)
+                elif 'new password cannot be the same' in msg:
+                    raise DuplicatePasswords(msg)
                 else: # TO DO
                     raise UnknownError(msg)
+                
+            else:
+                raise WrongId(f"Can't like or unlike a content with wrong id.")
 
         return response
 
     #### these are for like song/video/podcast/story:
     @classmethod
-    def __like__(cls,self,id):
-        if 'vote' in cls.__toggle_like__(self,id):
+    def __like__(cls, self, id):
+        if 'vote' in cls.__toggle_like__(self, id):
             return True
         else:
-            cls.__toggle_like__(self,id)
+            cls.__toggle_like__(self, id)
             return False
 
     @classmethod
-    def __unlike__(cls,self,id):
-        if 'vote' in cls.__toggle_like__(self,id):
-            cls.__toggle_like__(self,id)
+    def __unlike__(cls, self, id):
+        if 'vote' in cls.__toggle_like__(self, id):
+            cls.__toggle_like__(self, id)
             return False
         else:
             return True
 
     @classmethod
-    def __toggle_like__(cls,self,id):
+    def __toggle_like__(cls, self, id):
         return self.private_request(cls.LIKE_ENDPOINT,
                 params=f'id={id}&type={cls.TYPE}&vote=5&remove=1',
                 need_login=True).json()

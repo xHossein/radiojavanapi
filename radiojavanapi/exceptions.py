@@ -8,6 +8,9 @@ class ClientLoginRequired(ClientError):
 class ClientJSONDecodeError(ClientError):
     pass
 
+class ClientConnectionError(ClientError):
+    pass
+
 class PrivateError(ClientError):
     """For Private API"""
 
@@ -32,6 +35,12 @@ class NameExists(PrivateError):
 class PlayListExists(PrivateError):
     pass
 
+class WrongId(PrivateError):
+    pass
+
+class DuplicatePasswords(PrivateError):
+    pass
+    
 class UnknownError(PrivateError):
     pass
 
