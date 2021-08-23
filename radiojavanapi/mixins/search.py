@@ -3,6 +3,7 @@ from radiojavanapi.types import SearchResults
 from radiojavanapi.extractors import extract_search_results
 
 from typing import List
+from urllib.parse import quote_plus
 
 class SearchMixin(PrivateRequest):
     def search(self, query: str) -> SearchResults:
@@ -19,7 +20,7 @@ class SearchMixin(PrivateRequest):
 
         """
         response = self.private_request('search',
-                        params='query={}'.format(query.replace(' ','+'))).json()
+                        params='query={}'.format(quote_plus(query))).json()
         return extract_search_results(response)
 
     def get_trending_searches(self) -> List[str]:

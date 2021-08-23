@@ -4,6 +4,7 @@ from radiojavanapi.types import Artist
 from radiojavanapi.helper import url_to_id
 
 from pydantic import HttpUrl
+from urllib.parse import quote_plus
 
 class ArtistMixin(PrivateRequest):
     def get_artist_by_url(self, url: HttpUrl) -> Artist:
@@ -35,7 +36,7 @@ class ArtistMixin(PrivateRequest):
 
         """
         response = self.private_request(
-            'artist', params=f'query={name.replace(" ", "+")}').json()
+            'artist', params=f'query={quote_plus(name)}').json()
         return extract_artist(response)
 
     def follow_artist(self, name: str) -> bool:
@@ -52,7 +53,7 @@ class ArtistMixin(PrivateRequest):
 
         """
         response = self.private_request('artist_follow',
-                    params=f'artist={name.replace(" ", "+")}',
+                    params=f'artist={quote_plus(name)}',
                     need_login=True).json()
         return response['success'] == True
 
@@ -70,6 +71,6 @@ class ArtistMixin(PrivateRequest):
 
         """
         response = self.private_request('artist_unfollow', 
-                    params=f'artist={name.replace(" ", "+")}',
+                    params=f'artist={quote_plus(name)}',
                     need_login=True).json()
         return response['success'] == True
