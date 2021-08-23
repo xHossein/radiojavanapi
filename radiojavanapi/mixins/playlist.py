@@ -1,12 +1,13 @@
-from typing import Optional
-from radiojavanapi.helper import url_to_id
-from radiojavanapi.types import MusicPlaylist, Song, Video, VideoPlaylist
-from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_video_playlist,extract_music_playlist
 from radiojavanapi.mixins.private import PrivateRequest
+from radiojavanapi.extractors import extract_video_playlist, extract_music_playlist
+from radiojavanapi.helper import url_to_id
+from radiojavanapi.types import MusicPlaylist, VideoPlaylist
+
+from typing import Optional, Union
+from pydantic import HttpUrl
 
 class MusicPlayListMixin(PrivateRequest):
-    def get_music_playlist_by_url(self,url:HttpUrl) -> MusicPlaylist:
+    def get_music_playlist_by_url(self, url: HttpUrl) -> MusicPlaylist:
         """
         Get music playlist info by site url (e.g. radiojavan.com/playlists/playlist/mp3/...)
 
@@ -21,7 +22,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         return self.get_music_playlist_by_id(url_to_id(url))
 
-    def get_music_playlist_by_id(self,id:str) -> MusicPlaylist:
+    def get_music_playlist_by_id(self, id: str) -> MusicPlaylist:
         """
         Get music playlist info by id
 
@@ -38,144 +39,144 @@ class MusicPlayListMixin(PrivateRequest):
                                         params=f'id={id}').json()
         return extract_music_playlist(response)
 
-    def follow_music_playlist(self,music_playlist:MusicPlaylist) -> bool:
+    def follow_music_playlist(self, id: str) -> bool:
         """
         Follow a music playlist
 
         Parameters
         ----------
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: RJ api result
 
         """
         response = self.private_request('mp3_playlist_follow',
-                                params=f'id={music_playlist.id}&type=mp3',
+                                params=f'id={id}&type=mp3',
                                 need_login=True).json()
-        return True if response['success'] else False
+        return response['success'] == True
 
-    def unfollow_music_playlist(self,music_playlist:MusicPlaylist) -> bool:
+    def unfollow_music_playlist(self, id: str) -> bool:
         """
         UnFollow a music playlist
 
         Parameters
         ----------
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: RJ api result
 
         """
         response = self.private_request('mp3_playlist_unfollow',
-                                params=f'id={music_playlist.id}&type=mp3',
+                                params=f'id={id}&type=mp3',
                                 need_login=True).json()
-        return True if response['success'] else False
+        return response['success'] == True
 
-    def create_music_playlist(self,name:str,song:Song) -> Optional[str]:
+    def create_music_playlist(self, name: str, song_id: Union[int, str]) -> Optional[str]:
         """
         Create a music playlist
-        Note: in RJ you can't create empty playlist , so you need a song for creation playlist
+        Note: in RJ you can't create empty playlist , so you need a song for creating playlist
 
         Parameters
         ----------
             name: Name of playlist
-            song: An object of Song type
+            song_id: A digit id of Song
 
         Returns
         -------
-            str: playlist's id
+            str: Playlist's id
 
         """
         response = self.private_request('mp3_playlist_add',
-                                params=f'type=mp3&mp3={song.id}&name={name}',
+                                params=f'type=mp3&mp3={song_id}&name={name}',
                                 need_login=True).json()
         return response['playlist'] if response['success'] else None
 
-    def delete_music_playlist(self,music_playlist:MusicPlaylist) -> bool:
+    def delete_music_playlist(self, id: str) -> bool:
         """
         Delete your music playlist
 
         Parameters
         ----------
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         return self.private_request('mp3_playlist_remove',
-                        params=f'type=mp3&id={music_playlist.id}',
+                        params=f'type=mp3&id={id}',
                         need_login=True).json()['success']
 
-    def rename_music_playlist(self,music_playlist:MusicPlaylist,new_name:str) -> bool:
+    def rename_music_playlist(self, id: str, name: str) -> bool:
         """
         Rename your music playlist
 
         Parameters
         ----------
-            new_name: The name you want to set for a playlist
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
+            name: The name you want to set for a playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         return self.private_request('mp3_playlist_rename',
-                    params=f'type=mp3&id={music_playlist.id}&name={new_name}',
+                    params=f'type=mp3&id={id}&name={name}',
                     need_login=True).json()['success']
 
-    def add_to_music_playlist(self,music_playlist:MusicPlaylist,song:Song) -> bool:
+    def add_to_music_playlist(self, id: str, song_id: Union[int, str]) -> bool:
         """
         Add a song to your music playlist
 
         Parameters
         ----------
-            song: An object of Song type
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
+            song_id: A digit id of Song
 
         Returns
         -------
-            bool: returns false if song had been added already
+            bool: Returns false if song had been added already
 
         """
-        songs = music_playlist.songs
+        songs = self.get_music_playlist_by_id(id).songs
         for sng in songs:
-            if song.id == sng.id:
+            if song_id == sng.id:
                 return False
 
         return self.private_request('mp3_playlist_add',
-                    params=f'id={music_playlist.id}&mp3={song.id}&start=0',
+                    params=f'id={id}&mp3={song_id}&start=0',
                     need_login=True).json()['success']
 
-    def remove_from_music_playlist(self,music_playlist:MusicPlaylist,song:Song) -> bool:
+    def remove_from_music_playlist(self, id: str, song_id: Union[int, str]) -> bool:
         """
         Remove a song from your music playlist
 
         Parameters
         ----------
-            song: An object of Song type
-            music_playlist: An object of MusicPlaylist type
+            id: An id of music playlist
+            song_id: A digit id of Song
 
         Returns
         -------
-            bool: returns false if song hadn't been added before
+            bool: Returns false if song hadn't been added before
 
         """
-        songs = music_playlist.songs
+        songs = self.get_music_playlist_by_id(id).songs
         for sng in songs:
-            if song.id == sng.id:
+            if song_id == sng.id:
                 return self.private_request('mp3_playlist_item_remove',
-                        params=f'type=mp3&id={music_playlist.id}&item={sng.item}',
+                        params=f'type=mp3&id={id}&item={sng.item}',
                         need_login=True).json()['success']
         return False
 
 class VideoPlayListMixin(PrivateRequest):
-    def get_video_playlist_by_url(self,url:HttpUrl) -> VideoPlaylist:
+    def get_video_playlist_by_url(self, url: HttpUrl) -> VideoPlaylist:
         """
         Get video playlist info by site url (e.g. radiojavan.com/playlists/playlist/video/...)
 
@@ -190,7 +191,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         return self.get_video_playlist_by_id(url_to_id(url))
 
-    def get_video_playlist_by_id(self,id:str) -> VideoPlaylist:
+    def get_video_playlist_by_id(self, id: str) -> VideoPlaylist:
         """
         Get video playlist info by id
 
@@ -207,102 +208,103 @@ class VideoPlayListMixin(PrivateRequest):
                                 params=f'id={id}').json()
         return extract_video_playlist(response) 
 
-    def create_video_playlist(self,name:str,video:Video) -> Optional[str]:
+    def create_video_playlist(self, name: str, video_id: Union[int, str]) -> Optional[str]:
         """
         Create a video playlist
-        Note: in RJ you can't create empty playlist , so you need a video for creation playlist
+        Note: in RJ you can't create empty playlist , so you need a video for creating playlist
 
         Parameters
         ----------
             name: Name of playlist
-            video: An object of Video type
+            video_id: A digit id of Video
 
         Returns
         -------
-            str: playlist's id
+            str: Playlist's id
 
         """
         response = self.private_request('video_playlist_add',
-                        params=f'type=video&video={video.id}&name={name}',
+                        params=f'type=video&video={video_id}&name={name}',
                         need_login=True).json()
         return response['playlist'] if response['success'] else None
 
-    def delete_video_playlist(self,video_playlist:VideoPlaylist) -> bool:
+    def delete_video_playlist(self, id: str) -> bool:
         """
         Delete your video playlist
 
         Parameters
         ----------
-            video_playlist: An object of VideoPlaylist type
+            id: An id of video playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         return self.private_request('video_playlist_remove',
-                        params=f'type=video&id={video_playlist.id}',
+                        params=f'type=video&id={id}',
                         need_login=True).json()['success']
 
-    def rename_video_playlist(self,video_playlist:VideoPlaylist,new_name:str) -> bool:
+    def rename_video_playlist(self, id: str, name: str) -> bool:
         """
         Rename your video playlist
 
         Parameters
         ----------
-            new_name: The name you want to set for a playlist
-            video_playlist: An object of VideoPlaylist type
+            id: An id of video playlist
+            name: The name you want to set for a playlist
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         return self.private_request('video_playlist_rename',
-                        params=f'type=video&id={video_playlist.id}&name={new_name}',
+                        params=f'type=video&id={id}&name={name}',
                         need_login=True).json()['success']
 
-    def add_to_video_playlist(self,video_playlist:VideoPlaylist,video:Video) -> bool:
+    def add_to_video_playlist(self, id: str, video_id: Union[int, str]) -> bool:
         """
         Add a video to your video playlist
 
         Parameters
         ----------
-            video: An object of Video type
-            video_playlist: An object of VideoPlaylist type
+            id: An id of video playlist
+            video_id: A digit id of Video
 
         Returns
         -------
-            bool: returns false if video had been added already
+            bool: Returns false if video had been added already
 
         """
-        videos = video_playlist.videos
+        videos = self.get_video_playlist_by_id(id).videos
         for vid in videos:
-            if vid.id == video.id:
+            if vid.id == video_id:
                 return False
+            
         return self.private_request('video_playlist_add',
-                    params=f'type=video&video={video.id}&id={video_playlist.id}',
+                    params=f'type=video&video={video_id}&id={id}',
                     need_login=True).json()['success']
         
-    def remove_from_video_playlist(self,video_playlist:VideoPlaylist,video:Video) -> bool:
+    def remove_from_video_playlist(self, id: str, video_id: Union[int, str]) -> bool:
         """
         Remove a video from your video playlist
 
         Parameters
         ----------
-            video: An object of Video type
-            video_playlist: An object of VideoPlaylist type
+            id: An id of video playlist
+            video_id: A digit id of Video
 
         Returns
         -------
-            bool: returns false if video hadn't been added before
+            bool: Returns false if video hadn't been added before
 
         """
-        videos = video_playlist.videos
+        videos = self.get_video_playlist_by_id(id).videos
         for vid in videos:
-            if vid.id == video.id:
+            if vid.id == video_id:
                 return self.private_request('video_playlist_item_remove',
-                        params=f'type=video&id={video_playlist.id}&item={vid.item}',
+                        params=f'type=video&id={id}&item={vid.item}',
                         need_login=True).json()['success']
         return False
         

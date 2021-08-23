@@ -1,9 +1,14 @@
 from radiojavanapi.mixins.album import AlbumMixin
-from radiojavanapi.types import (Album, Artist, ComingSoon,
-                                Podcast, Song, Story, Video)
-from radiojavanapi.extractors import (extract_song, extract_podcast, extract_story,
-                                    extract_video, extract_coming_soon)
 from radiojavanapi.mixins.artist import ArtistMixin
+from radiojavanapi.types import (
+                        Album, Artist, ComingSoon,
+                        Podcast, Song, Story, Video
+                    )
+from radiojavanapi.extractors import (
+            extract_song, extract_podcast, extract_story,
+            extract_video, extract_coming_soon
+            )
+
 from typing import Dict, List
 
 class BrowseMixin(ArtistMixin,AlbumMixin):
@@ -95,7 +100,7 @@ class BrowseMixin(ArtistMixin,AlbumMixin):
     def get_radio_stream(self) -> Dict:
         songs = self.private_request('radio_nowplaying').json()
         return {
-                'link': self.private_request('streams').json(),
+                'links': self.private_request('streams').json(),
                 'current_song': songs[0],
                 'next_songs': songs[1:]
                 }

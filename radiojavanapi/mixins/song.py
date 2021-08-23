@@ -1,15 +1,16 @@
+from radiojavanapi.mixins.private import PrivateRequest
+from radiojavanapi.extractors import extract_song
+from radiojavanapi.types import Song
+from radiojavanapi.helper import url_to_id
+
 from typing import List, Union
 from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_song
-from radiojavanapi.mixins.private import PrivateRequest
-from ..types import Song
-from ..helper import url_to_id
 
 class SongMixin(PrivateRequest):
     LIKE_ENDPOINT = 'mp3_vote'
     TYPE = 'mp3'
 
-    def get_song_by_url(self,url:HttpUrl) -> Song:
+    def get_song_by_url(self, url: HttpUrl) -> Song:
         """
         Get song info by site url (e.g. radiojavan.com/mp3s/mp3/...)
 
@@ -24,13 +25,13 @@ class SongMixin(PrivateRequest):
         """
         return self.get_song_by_id(url_to_id(url))
 
-    def get_song_by_id(self,id:int) -> Song:
+    def get_song_by_id(self, id: Union[int, str]) -> Song:
         """
         Get song info by id
 
         Parameters
         ----------
-            id: Unique id of song (mp3)
+            id: A digit id of Song (mp3)
 
         Returns
         -------
@@ -41,35 +42,35 @@ class SongMixin(PrivateRequest):
                     params=f'id={id}').json()
         return extract_song(response)
 
-    def like_song(self,song:Song) -> bool:
+    def like_song(self, song_id: Union[int, str]) -> bool:
         """
         Like a song
 
         Parameters
         ----------
-            song: An object of Song type
+            song: A digit id of Song
 
         Returns
         -------
-            bool: returns false if song had been liked already
+            bool: Returns false if song had been liked already
 
         """
-        return SongMixin.__like__(self,song.id)
+        return SongMixin.__like__(self, song_id)
 
-    def unlike_song(self,song:Song) -> bool:
+    def unlike_song(self, song_id: Union[int, str]) -> bool:
         """
         UnLike a song
 
         Parameters
         ----------
-            song: An object of Song type
+            song: A digit id of Song
 
         Returns
         -------
-            bool: returns false if song hadn't been liked before
+            bool: Returns false if song hadn't been liked before
 
         """
-        return SongMixin.__unlike__(self,song.id)
+        return SongMixin.__unlike__(self, song_id)
 
     def liked_songs(self) -> List[Song]:
         """
@@ -77,8 +78,8 @@ class SongMixin(PrivateRequest):
 
         Returns
         -------
-            List: a list of Song object
+            List: A list of Song object
 
         """
-        response = self.private_request('mp3s_liked',need_login=True).json()
+        response = self.private_request('mp3s_liked', need_login=True).json()
         return [extract_song(song) for song in response]

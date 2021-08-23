@@ -1,15 +1,16 @@
-from radiojavanapi.helper import url_to_id
-from typing import Optional
-from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_story
 from radiojavanapi.mixins.private import PrivateRequest
-from ..types import Story
+from radiojavanapi.extractors import extract_story
+from radiojavanapi.types import Story
+from radiojavanapi.helper import url_to_id
+
+from typing import Union
+from pydantic import HttpUrl
 
 class StoryMixin(PrivateRequest):
     LIKE_ENDPOINT = 'selfie_vote'
     TYPE = 'selfie'
 
-    def get_story_by_url(self,url:HttpUrl) -> Optional[Story]:
+    def get_story_by_url(self, url: HttpUrl) -> Story:
         """
         Get story info by site url (e.g. radiojavan.com/story/...)
 
@@ -24,7 +25,7 @@ class StoryMixin(PrivateRequest):
         """
         return self.get_story_by_hash_id(url_to_id(url))
 
-    def get_story_by_hash_id(self,hash_id:str) -> Optional[Story]:
+    def get_story_by_hash_id(self, hash_id: str) -> Story:
         """
         Get story info by hash id
 
@@ -39,36 +40,36 @@ class StoryMixin(PrivateRequest):
         """
         response = self.private_request('selfie',
                     params=f'id={hash_id}').json()
-        return extract_story(response) if response else None
+        return extract_story(response)
 
-    def like_story(self, story:Story) -> bool:
+    def like_story(self, story_id: Union[int, str]) -> bool:
         """
         Like a story (selfie)
 
         Parameters
         ----------
-            story: An object of Story type
+            story_id: A digit id of stroy
 
         Returns
         -------
-            bool: returns false if story had been liked already
+            bool: Returns false if story had been liked already
 
         """
-        return StoryMixin.__like__(self,story.id)
+        return StoryMixin.__like__(self, story_id)
 
-    def unlike_story(self, story:Story) -> bool:
+    def unlike_story(self, story_id: Union[int, str]) -> bool:
         """
         UnLike a story (selfie)
 
         Parameters
         ----------
-            story: An object of Story type
+            story_id: A digit id of stroy
 
         Returns
         -------
-            bool: returns false if story hadn't been liked before
+            bool: Returns false if story hadn't been liked before
 
         """
-        return StoryMixin.__unlike__(self,story.id)
+        return StoryMixin.__unlike__(self, story_id)
     
 

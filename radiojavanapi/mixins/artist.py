@@ -1,10 +1,9 @@
-from typing import Optional
-from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_artist
 from radiojavanapi.mixins.private import PrivateRequest
-from ..types import Artist
-from ..helper import url_to_id
+from radiojavanapi.extractors import extract_artist
+from radiojavanapi.types import Artist
+from radiojavanapi.helper import url_to_id
 
+from pydantic import HttpUrl
 
 class ArtistMixin(PrivateRequest):
     def get_artist_by_url(self, url: HttpUrl) -> Artist:
@@ -22,13 +21,13 @@ class ArtistMixin(PrivateRequest):
         """
         return self.get_artist_by_name(url_to_id(url))
 
-    def get_artist_by_name(self, name: str) -> Optional[Artist]:
+    def get_artist_by_name(self, name: str) -> Artist:
         """
-        Get artist info by name (must be the exact name on RadioJavan)
+        Get artist info by name (must be the exact name on RadioJavan API)
 
         Parameters
         ----------
-            name: Exact name of artist on RadioJavan
+            name: Exact name of artist on RadioJavan API
 
         Returns
         -------
@@ -39,38 +38,38 @@ class ArtistMixin(PrivateRequest):
             'artist', params=f'query={name.replace(" ", "+")}').json()
         return extract_artist(response)
 
-    def follow_artist(self, artist: Artist) -> bool:
+    def follow_artist(self, name: str) -> bool:
         """
         Follow an artist
 
         Parameters
         ----------
-            artist: An object of Artist type
+            name: Exact name of artist on RadioJavan API
 
         Returns
         -------
-            bool: returns false if artist had been followed already
+            bool: RJ api result
 
         """
         response = self.private_request('artist_follow',
-                    params='artist={}'.format(artist.name.replace(' ', '+')),
+                    params=f'artist={name.replace(" ", "+")}',
                     need_login=True).json()
-        return True if response['success'] else False
+        return response['success'] == True
 
-    def unfollow_artist(self, artist: Artist) -> bool:
+    def unfollow_artist(self, name: str) -> bool:
         """
         UnFollow an artist
 
         Parameters
         ----------
-            artist: An object of Artist type
+            name: Exact name of artist on RadioJavan API
 
         Returns
         -------
-            bool: returns false if artist hadn't been followed before
+            bool: RJ api result
 
         """
         response = self.private_request('artist_unfollow', 
-                    params='artist={}'.format(artist.name.replace(' ', '+')),
+                    params=f'artist={name.replace(" ", "+")}',
                     need_login=True).json()
-        return True if response['success'] else False
+        return response['success'] == True

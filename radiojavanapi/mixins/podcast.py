@@ -1,14 +1,16 @@
-from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_podcast
 from radiojavanapi.mixins.private import PrivateRequest
-from ..types import Podcast
-from ..helper import url_to_id
+from radiojavanapi.extractors import extract_podcast
+from radiojavanapi.types import Podcast
+from radiojavanapi.helper import url_to_id
+
+from typing import Union
+from pydantic import HttpUrl
 
 class PodcastMixin(PrivateRequest):
     LIKE_ENDPOINT = 'podcast_vote'
     TYPE = 'podcast'
 
-    def get_podcast_by_url(self,url:HttpUrl) -> Podcast:
+    def get_podcast_by_url(self, url: HttpUrl) -> Podcast:
         """
         Get podcast info by site url (e.g. radiojavan.com/podcasts/podcast/...)
 
@@ -23,7 +25,7 @@ class PodcastMixin(PrivateRequest):
         """
         return self.get_podcast_by_id(url_to_id(url))
 
-    def get_podcast_by_id(self,id:int) -> Podcast:
+    def get_podcast_by_id(self, id: Union[int, str]) -> Podcast:
         """
         Get podcast info by id
 
@@ -40,33 +42,33 @@ class PodcastMixin(PrivateRequest):
                         params=f'id={id}').json()
         return extract_podcast(response)
 
-    def like_podcast(self,podcast:Podcast) -> bool:
+    def like_podcast(self, podcast_id: Union[int, str]) -> bool:
         """
         Like a podcast
 
         Parameters
         ----------
-            podcast: An object of Podcast type
+            podcast_id: A digit id of podcast
 
         Returns
         -------
-            bool: returns false if podcast had been liked already
+            bool: Returns false if podcast had been liked already
 
         """
-        return PodcastMixin.__like__(self,podcast.id)
+        return PodcastMixin.__like__(self, podcast_id)
 
-    def unlike_podcast(self,podcast:Podcast) -> bool:
+    def unlike_podcast(self, podcast_id: Union[int, str]) -> bool:
         """
         UnLike a podcast
 
         Parameters
         ----------
-            podcast: An object of Podcast type
+            podcast_id: A digit id of podcast
 
         Returns
         -------
-            bool: returns false if podcast hadn't been liked before
+            bool: Returns false if podcast hadn't been liked before
 
         """
-        return PodcastMixin.__unlike__(self,podcast.id)
+        return PodcastMixin.__unlike__(self, podcast_id)
 

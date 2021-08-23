@@ -1,10 +1,11 @@
-from typing import List
+from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.types import SearchResults
 from radiojavanapi.extractors import extract_search_results
-from radiojavanapi.mixins.private import PrivateRequest
+
+from typing import List
 
 class SearchMixin(PrivateRequest):
-    def search(self,query:str) -> SearchResults:
+    def search(self, query: str) -> SearchResults:
         """
         Search and get id of songs/video/albums & etc.
 

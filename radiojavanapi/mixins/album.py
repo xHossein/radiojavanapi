@@ -1,13 +1,13 @@
 from radiojavanapi.mixins.search import SearchMixin
-from typing import List, Optional
-from pydantic import HttpUrl
 from radiojavanapi.extractors import extract_album
-from ..types import Album
-from ..helper import url_to_id
+from radiojavanapi.types import Album
+from radiojavanapi.helper import url_to_id
 
+from typing import Union
+from pydantic import HttpUrl
 
 class AlbumMixin(SearchMixin):
-    def get_album_by_url(self,url:HttpUrl) -> Optional[Album]:
+    def get_album_by_url(self, url: HttpUrl) -> Album:
         """
         Get album info by site url (e.g. radiojavan.com/mp3s/album/...)
 
@@ -21,21 +21,18 @@ class AlbumMixin(SearchMixin):
 
         """
         query = url_to_id(url).lower().replace('-',' ')
-        albums_id = self.search(query).albums_id
-        for id in albums_id:
-            album = self.private_request('mp3',
-                    params=f'id={id}').json()
-            if album.get('album_album').lower() in query and \
-                album.get('album_artist').lower() in query:
-                return extract_album(album)
+        albums = self.search(query).albums
+        for album in albums:
+            if album.artist.lower() in query and album.name.lower() in query:
+                return self.get_album_by_id(album.id)
 
-    def get_album_by_id(self,id:int) -> Optional[Album]:
+    def get_album_by_id(self, id: Union[int, str]) -> Album:
         """
         Get album info by id
 
         Parameters
         ----------
-            id: this id belong to one of album-tracks
+            id: This id belong to one of album-tracks
 
         Returns
         -------

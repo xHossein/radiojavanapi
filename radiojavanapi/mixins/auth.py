@@ -1,6 +1,7 @@
 from radiojavanapi.mixins.private import PrivateRequest
+from radiojavanapi.constants import BASE_HEADERS
 
-class Auth(PrivateRequest):
+class AuthMixin(PrivateRequest):
     def __init__(self) -> None:
         super().__init__()
         self.cookie = None
@@ -35,3 +36,17 @@ class Auth(PrivateRequest):
             self.private.headers.update(self.cookie)
             self.authorized = True
         return self.authorized
+    
+    def logout(self) -> bool:
+        response = self.private_request('logout',
+                                need_login=True).json()["success"]
+        if response:
+            self.cookie = None
+            self.authorized = False
+            self.email = None
+            self.password = None
+            self.private.cookies.clear()
+            self.private.headers.clear()
+            self.private.headers.update(BASE_HEADERS)
+            return True
+        return False

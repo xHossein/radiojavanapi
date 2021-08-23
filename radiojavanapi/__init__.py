@@ -6,11 +6,8 @@ from radiojavanapi.mixins.playlist import MusicPlayListMixin, VideoPlayListMixin
 from radiojavanapi.mixins.podcast import PodcastMixin
 from radiojavanapi.mixins.video import VideoMixin
 from radiojavanapi.mixins.account import AccountMixin
-from radiojavanapi.mixins.auth import Auth
-
 
 class Client(
-            Auth,
             AccountMixin,
             VideoMixin,
             SongMixin,

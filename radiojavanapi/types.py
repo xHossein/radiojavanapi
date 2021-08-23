@@ -6,6 +6,21 @@ class Profile(BaseModel):
     username: Optional[str]
     display_name: str
 
+class ShortData(BaseModel):
+    id: Union[int, str]
+    artist: Optional[str]
+    name: Optional[str]
+    created_at: str
+    permlink: Optional[str]
+    photo: HttpUrl
+    photo_player: Optional[HttpUrl]
+    share_link: HttpUrl
+    title: str
+    
+class MyPlaylists(BaseModel):
+    music_playlists: List[ShortData] = []
+    video_playlists: List[ShortData] = []
+    
 class Story(BaseModel):
     id: int
     hash_id: str
@@ -21,7 +36,6 @@ class Story(BaseModel):
     photo: HttpUrl
     thumbnail: HttpUrl
     verified: bool
-    type: str
     likes: str
     likes_pretty: str
     user: Profile
@@ -59,14 +73,13 @@ class RJBaseModel(BaseModel):
     lq_link: HttpUrl
     permlink: str
     photo: HttpUrl
-    photo_player: HttpUrl
+    photo_player: Optional[HttpUrl]
     share_link: HttpUrl
     title: str
-    type: str
 
 class Song(RJBaseModel):
     artist: str
-    song: str
+    name: str
     item: Optional[str] # for playlist
     album: Optional[str]
     date: Optional[str]
@@ -78,17 +91,17 @@ class Song(RJBaseModel):
     credits: Optional[str]
     artist_tags: List[str] = []
     lyric: Optional[str]
-    related_songs_id: List[int] = []
+    related_songs: List[ShortData] = []
     stories: List[Story] = []
 
 class Video(RJBaseModel):
     artist: str
-    song: str
+    name: str
     item: Optional[str] # for playlist
     date: Optional[str]
     views: int
     artist_tags: List[str] = []
-    related_video_id: List[int] = []
+    related_videos: List[ShortData] = []
 
 class Podcast(RJBaseModel):
     date: str
@@ -100,7 +113,7 @@ class Podcast(RJBaseModel):
     plays: int
     show_permlink: Optional[str]
     tracklist: Optional[str]
-    related_podcast_id: List[int] = []
+    related_podcasts: List[ShortData] = []
 
 class Artist(BaseModel):
     name: str
@@ -112,26 +125,16 @@ class Artist(BaseModel):
     prereleases: List = []
     events: List = []
     photos: List = []
-    latest_song_id: Optional[int]
+    latest_song: Optional[ShortData]
     followers_count: int
     following: bool
     plays: str
-    songs_id: List[int] = []
-    albums_id: List[int] = []
-    videos_id: List[int] = []
-    podcasts_id: List[int] = []
-    playlists_id: List[str] = []
+    songs: List[ShortData] = []
+    albums: List[ShortData] = []
+    videos: List[ShortData] = []
+    podcasts: List[ShortData] = []
+    music_playlists: List[ShortData] = []
 
-class ShortData(BaseModel):
-    id: Union[int, str]
-    artist: Optional[str]
-    name: Optional[str]
-    created_at: str
-    permlink: Optional[str]
-    photo: HttpUrl
-    photo_player: HttpUrl
-    share_link: HttpUrl
-    title: str
     
 class SearchResults(BaseModel):
     query: str
@@ -152,17 +155,15 @@ class MusicPlaylist(BaseModel):
     created_at: str
     created_by: str
     last_updated_at: str
-    type: str
-    subtype: str
     share_link: HttpUrl
     followers: int
-    following: bool
-    sync: bool
+    following: Optional[bool] # login required
+    sync: Optional[bool] # login required
     public: bool
     myplaylist: bool
     photo: HttpUrl
     custom_photo: bool
-    photo_player: HttpUrl
+    photo_player: Optional[HttpUrl]
     thumbnail: HttpUrl
     songs: List[Song] = []
 
@@ -172,12 +173,10 @@ class VideoPlaylist(BaseModel):
     count: int
     created_at: str
     last_updated_at: str
-    type: str
-    subtype: str
     share_link: HttpUrl
     myplaylist: bool
     photo: HttpUrl
-    photo_player: HttpUrl
+    photo_player: Optional[HttpUrl]
     thumbnail: HttpUrl
     videos: List[Video] = []
 
@@ -193,7 +192,6 @@ class Album(BaseModel):
 class ComingSoon(BaseModel):
     song: str
     artist: str
-    type: str
     link: HttpUrl
     share_link: HttpUrl
     html_link: HttpUrl

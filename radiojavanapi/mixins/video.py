@@ -1,15 +1,16 @@
-from typing import List
-from pydantic import HttpUrl
-from radiojavanapi.extractors import extract_video
 from radiojavanapi.mixins.private import PrivateRequest
-from ..types import Video
-from ..helper import url_to_id
+from radiojavanapi.extractors import extract_video
+from radiojavanapi.types import Video
+from radiojavanapi.helper import url_to_id
+
+from typing import List, Union
+from pydantic import HttpUrl
 
 class VideoMixin(PrivateRequest):
     LIKE_ENDPOINT = 'video_vote'
     TYPE = 'video'
 
-    def get_video_by_url(self,url:HttpUrl) -> Video:
+    def get_video_by_url(self, url: HttpUrl) -> Video:
         """
         Get video info by site url (e.g. radiojavan.com/videos/video/...)
 
@@ -24,7 +25,7 @@ class VideoMixin(PrivateRequest):
         """
         return self.get_video_by_id(url_to_id(url))
 
-    def get_video_by_id(self,id:int) -> Video:
+    def get_video_by_id(self, id: Union[int, str]) -> Video:
         """
         Get video info by id
 
@@ -41,35 +42,35 @@ class VideoMixin(PrivateRequest):
                     params=f'id={id}').json()
         return extract_video(response)
 
-    def like_video(self,video:Video) -> bool:
+    def like_video(self, video_id: Union[int, str]) -> bool:
         """
         Like a video
 
         Parameters
         ----------
-            video: An object of Video type
+            video_id: A digit id of Video
 
         Returns
         -------
-            bool: returns false if video had been liked already
+            bool: Returns false if video had been liked already
 
         """
-        return VideoMixin.__like__(self,video.id)
+        return VideoMixin.__like__(self, video_id)
 
-    def unlike_video(self,video:Video) -> bool:
+    def unlike_video(self, video_id: Union[int, str]) -> bool:
         """
         UnLike a video
 
         Parameters
         ----------
-            video: An object of Video type
+            video_id: A digit id of Video
 
         Returns
         -------
-            bool: returns false if video hadn't been liked before
+            bool: Returns false if video hadn't been liked before
 
         """
-        return VideoMixin.__unlike__(self,video.id)
+        return VideoMixin.__unlike__(self, video_id)
 
     def liked_videos(self) -> List[Video]:
         """
@@ -77,9 +78,9 @@ class VideoMixin(PrivateRequest):
 
         Returns
         -------
-            List: a list of Video object
+            List: A list of Video object
 
         """
-        response =  self.private_request('videos_liked',
-                    need_login=True).json()
+        response = self.private_request(
+                    'videos_liked', need_login=True).json()
         return [extract_video(video) for video in response]

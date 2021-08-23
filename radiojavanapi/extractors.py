@@ -1,7 +1,9 @@
-from radiojavanapi.helper import toInt
-from .types import (Account, Album, Artist, ComingSoon, Profile, Song,
-                    MusicPlaylist, Story, Video, ShortData,
-                    Podcast, SearchResults, VideoPlaylist)
+from radiojavanapi.helper import to_int
+from radiojavanapi.types import (
+            Account, Album, Artist, ComingSoon, MyPlaylists,
+            Profile, Song, MusicPlaylist, Story, Video, ShortData,
+            Podcast, SearchResults, VideoPlaylist
+            )
 
 def extract_account(data) -> Account:
     data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
@@ -10,47 +12,49 @@ def extract_account(data) -> Account:
     return Account(**data)
 
 def extract_song(data) -> Song:
-    album_dic = data.pop('album',None)
-    album_str = data.pop('album_album',None)
-    data["album"] = album_dic['album'] if album_dic else album_str
-    data["plays"] = toInt(data.pop('plays'))
-    data["likes"] = toInt(data.pop('likes'))
-    data["dislikes"] = toInt(data.pop('dislikes'))
-    data["downloads"] = toInt(data.pop('downloads'))
-    data["related_songs_id"] = [song["id"] for song in data.pop('related',[])]
-    data["stories"] = [extract_story(story) 
-                    for story in data.pop('selfies',[])]
+    album = data.pop('album', None)
+    if type(album) == dict:
+        album = album.pop('album', None)
+    data["album"] = album if album else data.pop('album', None)
+    data["plays"] = to_int(data.pop('plays'))
+    data["name"] = data.pop('song')
+    data["likes"] = to_int(data.pop('likes'))
+    data["dislikes"] = to_int(data.pop('dislikes'))
+    data["downloads"] = to_int(data.pop('downloads'))
+    data["related_songs"] = [extract_short_data(song, Song) for song in data.pop('related',[])]
+    data["stories"] = [extract_story(story) for story in data.pop('selfies',[])]
     return Song(**data)
 
 def extract_video(data) -> Video:
     data["lq_hls"] = data.get('low_web')
     data["hq_hls"] = data.get('high_web')
-    data["views"] = toInt(data.pop('views'))
-    data["likes"] = toInt(data.pop('likes'))
-    data["dislikes"] = toInt(data.pop('dislikes'))
-    data["related_video_id"] = [video["id"] for video in data.pop('related',[])]
+    data["name"] = data.pop('song')
+    data["views"] = to_int(data.pop('views'))
+    data["likes"] = to_int(data.pop('likes'))
+    data["dislikes"] = to_int(data.pop('dislikes'))
+    data["related_videos"] = [extract_short_data(video, Video) for video in data.pop('related',[])]
     return Video(**data)
 
 def extract_podcast(data) -> Podcast:
-    data["plays"] = toInt(data.pop('plays'))
-    data["likes"] = toInt(data.pop('likes'))
-    data["dislikes"] = toInt(data.pop('dislikes'))
-    data["related_podcast_id"] = [podcast["id"] for podcast in data.pop('related',[])]
+    data["plays"] = to_int(data.pop('plays'))
+    data["likes"] = to_int(data.pop('likes'))
+    data["dislikes"] = to_int(data.pop('dislikes'))
+    data["related_podcasts"] = [extract_short_data(podcast, Podcast) for podcast in data.pop('related',[])]
     return Podcast(**data)
 
 def extract_artist(data) -> Artist:
-    data["latest_song_id"] = data.pop('latest')['id'] if data.get('latest') else None
+    data["latest_song"] = extract_short_data(data.pop('latest'), Song) if data.get('latest') else None
     data['name'] = data.pop('query')
     followers = data.pop('followers')
     data["followers_count"] = followers['count']
     data["following"] = followers['following']
     data["plays"] = followers['plays']
-    data["songs_id"] = [mp3["id"] for mp3 in data.pop('mp3s')]
-    data["albums_id"] = [album["id"] for album in data.pop('albums')]
-    data["videos_id"] = [video["id"] for video in data.pop('videos')]
-    data["podcasts_id"] = [podcasts["id"] for podcasts in data.pop('podcasts')]
-    data["playlists_id"] = [playlist["playlist"]["id"] 
-                            for playlist in data.pop('playlists')]
+    data["songs"] = [extract_short_data(mp3, Song) for mp3 in data.pop('mp3s')]
+    data["albums"] = [extract_short_data(album, Album) for album in data.pop('albums')]
+    data["videos"] = [extract_short_data(video, Video) for video in data.pop('videos')]
+    data["podcasts"] = [extract_short_data(podcasts, Podcast) for podcasts in data.pop('podcasts')]
+    data["music_playlists"] = [extract_short_data(playlist['playlist'], MusicPlaylist)
+                                for playlist in data.pop('playlists')]
     return Artist(**data)
 
 def extract_short_data(data, type) -> ShortData:
@@ -69,6 +73,9 @@ def extract_short_data(data, type) -> ShortData:
     elif type == MusicPlaylist:
         data["name"] = data["title"]
         data["title"] = '{} - \"{}\"'.format(data["name"], data["created_by"])
+        
+    elif type == VideoPlaylist:
+        data["name"] = data["title"]
         
     elif type == 'show':
         data["artist"] = data["date"]
@@ -95,7 +102,7 @@ def extract_video_playlist(data) -> VideoPlaylist:
     return VideoPlaylist(**data)
 
 def extract_music_playlist(data) -> MusicPlaylist:
-    data["sync"] = True if data.pop('sync') else False
+    data["sync"] = True if data.pop('sync', None) else False
     data["songs"] = [extract_song(song) for song in data.pop('items',[])]
     return MusicPlaylist(**data)
 
@@ -119,4 +126,12 @@ def extract_album(data):
     data['artist'] = data.pop('album_artist')
     data['share_link'] = data.get('album_share_link','share_link')
     return Album(**data)
+
+def extract_my_playlists(data):
+    return MyPlaylists(**{
+                "music_playlists": [extract_short_data(mpl, MusicPlaylist)
+                                    for mpl in data['mp3s']['myplaylists']],
+                "video_playlists": [extract_short_data(vpl, VideoPlaylist)
+                                    for vpl in data['videos']['myplaylists']]
+                })
 

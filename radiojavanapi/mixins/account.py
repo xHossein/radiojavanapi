@@ -1,11 +1,10 @@
+from radiojavanapi.mixins.auth import AuthMixin
+from radiojavanapi.types import Account, MyPlaylists
+from radiojavanapi.extractors import extract_account, extract_my_playlists
 
-from typing import Dict, List
-from ..types import Account
-from radiojavanapi.extractors import extract_account
-from radiojavanapi.mixins.private import PrivateRequest
-from radiojavanapi.constants import BASE_HEADERS
+from typing import List
 
-class AccountMixin(PrivateRequest):
+class AccountMixin(AuthMixin):
     def account_info(self) -> Account:
         """
         Get private info for your account
@@ -23,29 +22,44 @@ class AccountMixin(PrivateRequest):
         return extract_account(response)
     
 
-    def account_edit(self, data:dict) -> Account:
+    def account_edit(self,
+                     firstname: str = None,
+                     lastname: str = None,
+                     username: str = None,
+                     email: str = None,
+                    _remove_photo: bool = False
+                    ) -> Account:
+        
         """
-        Change profile data (e.g. email, firstname, lastname, username)
+        Change profile data (e.g. email, firstname, lastname, username).
 
         Parameters
         ----------
-            data: Fields you want to edit in your account as key and value pairs
-
+            firstname: Account's firstname
+            lastname : Account's lastname
+            username : Account's username
+            email    : Account's email
+            
         Returns
         -------
             Account: An object of Account type
 
         """
-        account = self.account_info().dict()
-        fields = ['firstname', 'lastname', 'email', 'username','remove_photo']
-        updated_data = {key: account[key] 
-                for key in fields if key in account}  
-        updated_data.update({k:v for k,v in data.items() if k in fields})
+        account = self.account_info()
+        payload = {
+            'firstname'  : firstname or account.firstname,
+            'lastname'   : lastname  or account.lastname,
+            'email'      : email     or account.email,
+            'username'   : username  or account.username,
+        }
+        if _remove_photo:
+            payload.update({"remove_photo": True})
+
         self.private_request('user_profile_update',
-                             json=updated_data,need_login=True)
+                             json=payload, need_login=True)
         return self.account_info()
 
-    def change_password(self,password:str) -> bool:
+    def change_password(self, password: str) -> bool:
         """
         Change your account's password
 
@@ -55,54 +69,65 @@ class AccountMixin(PrivateRequest):
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         response = self.private_request('user_password_update',
                         json={
-                            "oldpass":self.password,
-                            "newpass1":password,
-                            "newpass2":password
-                        },need_login=True).json()['success']
-        if response:
+                            "oldpass" : self.password,
+                            "newpass1": password,
+                            "newpass2": password
+                        }, need_login=True)
+        
+        response_json = response.json()
+        if response_json['success']:
             self.password = password
+            self.cookie = {
+                            'Cookie': '_rj_web={}'.format(
+                              response.headers['Set-Cookie'].split('_rj_web=')[1].split(';')[0]
+                              )
+                          }
+            self.private.headers.update(self.cookie)
             return True
         return False
 
-    def change_photo(self,photo_path:str) -> bool:
+    def upload_photo(self, photo_path: str) -> bool:
         """
-        Change photo for your profile (support jpg/png)
+        Upload your profile photo (support jpg/png)
 
         Parameters
         ----------
         photo_path:
-            Path to the image you want to update as your profile photo
+            Path to the image you want to upload
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
         account = self.account_info()
-        fields = {'firstname': account.firstname,
-                 'lastname': account.lastname,
-                 'email': account.email,
-                 'username': account.username,
-                 'remove_photo': 'undefined',
-                 'photo': ('0', open(photo_path, 'rb'), 'image/jpeg')}
+        fields = {
+            'firstname': account.firstname,
+            'lastname': account.lastname,
+            'email': account.email,
+            'username': account.username,
+            'remove_photo': 'undefined',
+            'photo': ('0', open(photo_path, 'rb'), 'image/jpeg')
+        }
         return self.private_request('user_profile_update',
                     fields=fields , need_login=True).json()['success']
 
     def remove_photo(self) -> Account:
         """
-        Remove photo for your profile
+        Remove your profile photo
 
         Returns
         -------
-            Account: An object of Account type
+            bool: Returns true if removed successfully
 
         """
-        return self.account_edit(remove_photo=True)
+        account = self.account_edit(_remove_photo = True)
+        return account.custom_photo != True
 
     def deactive_account(self) -> bool:
         """
@@ -110,13 +135,11 @@ class AccountMixin(PrivateRequest):
 
         Returns
         -------
-            bool: returns true if success
+            bool: Returns true if success
 
         """
-        if self.private_request('deactivate',need_login=True).json()['success']:
-            self.private_request('logout',need_login=True)
-            self.private.headers = BASE_HEADERS
-            self.authorized = False
+        if self.private_request('deactivate',
+                    need_login=True).json()['success'] and self.logout():
             return True
         return False
 
@@ -131,20 +154,15 @@ class AccountMixin(PrivateRequest):
         """
         return self.account_info().artists_name
 
-    def my_playlists(self) -> Dict:
+    def my_playlists(self) -> MyPlaylists:
         """
-        Get your MusicPlaylist & VideoPlaylist's id and title as Dict
+        Get your MusicPlaylist & VideoPlaylist' shortdata as MyPlaylists Object
 
         Returns
         -------
-            Dict: Playlists id and title as Dict
-
+            MyPlaylists: An object of MyPlaylists type
+            
         """
-        response = self.private_request('playlists_dash',need_login=True).json()  
-        return {
-                "music_playlists": [{k: mpl[k] for k in ('id', 'title')}
-                                    for mpl in response['mp3s']['myplaylists']],
-                "video_playlists": [{k: vpl[k] for k in ('id', 'title')}
-                                    for vpl in response['videos']['myplaylists']]
-                }
+        response = self.private_request('playlists_dash', need_login=True).json()  
+        return extract_my_playlists(response)
   
