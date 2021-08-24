@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RadioJavan API Wrapper Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Fast and effective RadioJavan API wrapper in python">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css" />
+
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'radiojavanapi',
+      repo: 'https://github.com/xHossein/radiojavanapi',
+      loadSidebar: 'sidebar.md',
+      coverpage  : 'coverpage.md',
+      homepage   : 'introduction.md',
+
+      alias: {
+            '.*?/changelog': 'https://raw.githubusercontent.com/xHossein/radiojavanapi/master/CHANGELOG.md',
+      },
+
+      auto2top   : true,
+      maxLevel   : 3,
+      subMaxLevel: 3,
+      executeScript: true,
+      search: {
+          depth      : 3,
+          noData     : 'No results!',
+          placeholder: 'Search...'
+      }
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/external-script.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+    
+</body>
+</html>
