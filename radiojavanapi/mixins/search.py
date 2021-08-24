@@ -1,5 +1,5 @@
 from radiojavanapi.mixins.private import PrivateRequest
-from radiojavanapi.types import SearchResults
+from radiojavanapi.models import SearchResults
 from radiojavanapi.extractors import extract_search_results
 
 from typing import List
@@ -8,9 +8,9 @@ from urllib.parse import quote_plus
 class SearchMixin(PrivateRequest):
     def search(self, query: str) -> SearchResults:
         """
-        Search and get id of songs/video/albums & etc.
+        Search and get results as SearchResults object.
 
-        Parameters
+        Arguments
         ----------
             query: Search query
 

@@ -1,8 +1,8 @@
 from radiojavanapi.constants import API_DOMAIN, BASE_HEADERS
 from radiojavanapi.exceptions import (
-                BadCredentials, ClientJSONDecodeError, ClientConnectionError, DuplicatePasswords,
-                EmailExists, ClientLoginRequired, LongString, NameExists, OnlyContainLetters,
-                PlayListExists, UnknownError, UsernameExists, ClientLoginRequired, WrongId
+                BadCredentials, ClientJSONDecodeError, ClientConnectionError, DuplicatePassword,
+                EmailExists, ClientLoginRequired, LongString, InvalidName, DuplicateName,
+                UnknownError, UsernameExists, ClientLoginRequired, InvalidMediaId
                 )
 
 import requests
@@ -54,7 +54,7 @@ class PrivateRequest():
         except JSONDecodeError as e:
             raise ClientJSONDecodeError(f"JSONDecodeError {e} while opening {response.url}")
 
-        if isinstance(response_json,dict) and response_json.get('success') == False:
+        if isinstance(response_json, dict) and response_json.get('success') == False and 'user_subscription' not in response.url:
             msg = response_json.get('msg')
             if msg:
                 if 'is too long' in msg:
@@ -62,22 +62,24 @@ class PrivateRequest():
                 elif 'Invalid email' in msg:
                     raise BadCredentials(msg)
                 elif 'only contain letters' in msg:
-                    raise OnlyContainLetters(msg)
+                    raise InvalidName(msg)
                 elif 'already have that email' in msg:
                     raise EmailExists(msg)
                 elif 'username is not available' in msg:
                     raise UsernameExists(msg)
                 elif 'Name already exists.' == msg:
-                    raise NameExists(msg)
+                    raise DuplicateName('Playlist with this name already exists.')
                 elif 'Playlist with this name already exists.' == msg:
-                    raise PlayListExists(msg)
+                    raise DuplicateName(msg)
                 elif 'new password cannot be the same' in msg:
-                    raise DuplicatePasswords(msg)
+                    raise DuplicatePassword(msg)
                 else: # TO DO
                     raise UnknownError(msg)
                 
+            elif len(response_json) == 1:
+                raise InvalidMediaId(f"An invalid media is was provided.")
             else:
-                raise WrongId(f"Can't like or unlike a content with wrong id.")
+                raise UnknownError(response_json)
 
         return response
 

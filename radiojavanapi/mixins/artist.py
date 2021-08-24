@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_artist
-from radiojavanapi.types import Artist
+from radiojavanapi.models import Artist
 from radiojavanapi.helper import url_to_id
 
 from pydantic import HttpUrl
@@ -11,7 +11,7 @@ class ArtistMixin(PrivateRequest):
         """
         Get artist info by site url (e.g. radiojavan.com/artist/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of artist
 
@@ -26,7 +26,7 @@ class ArtistMixin(PrivateRequest):
         """
         Get artist info by name (must be the exact name on RadioJavan API)
 
-        Parameters
+        Arguments
         ----------
             name: Exact name of artist on RadioJavan API
 
@@ -43,7 +43,7 @@ class ArtistMixin(PrivateRequest):
         """
         Follow an artist
 
-        Parameters
+        Arguments
         ----------
             name: Exact name of artist on RadioJavan API
 
@@ -61,7 +61,7 @@ class ArtistMixin(PrivateRequest):
         """
         UnFollow an artist
 
-        Parameters
+        Arguments
         ----------
             name: Exact name of artist on RadioJavan API
 

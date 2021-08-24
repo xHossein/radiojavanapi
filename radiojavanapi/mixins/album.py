@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.search import SearchMixin
 from radiojavanapi.extractors import extract_album
-from radiojavanapi.types import Album
+from radiojavanapi.models import Album
 from radiojavanapi.helper import url_to_id
 
 from typing import Union
@@ -11,7 +11,7 @@ class AlbumMixin(SearchMixin):
         """
         Get album info by site url (e.g. radiojavan.com/mp3s/album/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of album
 
@@ -30,7 +30,7 @@ class AlbumMixin(SearchMixin):
         """
         Get album info by id
 
-        Parameters
+        Arguments
         ----------
             id: This id belong to one of album-tracks
 

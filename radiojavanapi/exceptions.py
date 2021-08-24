@@ -17,7 +17,7 @@ class PrivateError(ClientError):
 class BadCredentials(PrivateError):
     pass
 
-class OnlyContainLetters(PrivateError):
+class InvalidName(PrivateError):
     pass
 
 class LongString(PrivateError):
@@ -29,16 +29,13 @@ class EmailExists(PrivateError):
 class UsernameExists(PrivateError):
     pass
 
-class NameExists(PrivateError):
+class DuplicateName(PrivateError):
     pass
 
-class PlayListExists(PrivateError):
+class InvalidMediaId(PrivateError):
     pass
 
-class WrongId(PrivateError):
-    pass
-
-class DuplicatePasswords(PrivateError):
+class DuplicatePassword(PrivateError):
     pass
     
 class UnknownError(PrivateError):

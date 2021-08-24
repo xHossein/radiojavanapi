@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_story
-from radiojavanapi.types import Story
+from radiojavanapi.models import Story
 from radiojavanapi.helper import url_to_id
 
 from typing import Union
@@ -14,7 +14,7 @@ class StoryMixin(PrivateRequest):
         """
         Get story info by site url (e.g. radiojavan.com/story/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of story (selfie)
 
@@ -29,7 +29,7 @@ class StoryMixin(PrivateRequest):
         """
         Get story info by hash id
 
-        Parameters
+        Arguments
         ----------
             hash_id: Unique hash id of story (selfie)
 
@@ -46,7 +46,7 @@ class StoryMixin(PrivateRequest):
         """
         Like a story (selfie)
 
-        Parameters
+        Arguments
         ----------
             story_id: A digit id of stroy
 
@@ -61,7 +61,7 @@ class StoryMixin(PrivateRequest):
         """
         UnLike a story (selfie)
 
-        Parameters
+        Arguments
         ----------
             story_id: A digit id of stroy
 

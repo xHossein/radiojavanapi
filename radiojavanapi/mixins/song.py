@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_song
-from radiojavanapi.types import Song
+from radiojavanapi.models import Song
 from radiojavanapi.helper import url_to_id
 
 from typing import List, Union
@@ -14,7 +14,7 @@ class SongMixin(PrivateRequest):
         """
         Get song info by site url (e.g. radiojavan.com/mp3s/mp3/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of song (mp3)
 
@@ -29,7 +29,7 @@ class SongMixin(PrivateRequest):
         """
         Get song info by id
 
-        Parameters
+        Arguments
         ----------
             id: A digit id of Song (mp3)
 
@@ -46,7 +46,7 @@ class SongMixin(PrivateRequest):
         """
         Like a song
 
-        Parameters
+        Arguments
         ----------
             song: A digit id of Song
 
@@ -61,7 +61,7 @@ class SongMixin(PrivateRequest):
         """
         UnLike a song
 
-        Parameters
+        Arguments
         ----------
             song: A digit id of Song
 

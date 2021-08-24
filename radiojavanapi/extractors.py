@@ -1,11 +1,12 @@
 from radiojavanapi.helper import to_int
-from radiojavanapi.types import (
-            Account, Album, Artist, ComingSoon, MyPlaylists,
-            Profile, Song, MusicPlaylist, Story, Video, ShortData,
-            Podcast, SearchResults, VideoPlaylist
+from radiojavanapi.models import (
+            Account, Album, Artist, MyPlaylists,
+            Profile, Song, MusicPlaylist, Story, Video,
+            ShortData, Podcast, SearchResults, VideoPlaylist
             )
 
 def extract_account(data) -> Account:
+    data["has_custom_photo"] = data.pop('custom_photo')
     data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
     data["stories"] = [extract_story(story) 
                     for story in data.pop('selfies',[])]
@@ -36,6 +37,7 @@ def extract_video(data) -> Video:
     return Video(**data)
 
 def extract_podcast(data) -> Podcast:
+    data["is_talk"] = data.pop('talk')
     data["plays"] = to_int(data.pop('plays'))
     data["likes"] = to_int(data.pop('likes'))
     data["dislikes"] = to_int(data.pop('dislikes'))
@@ -98,10 +100,14 @@ def extract_search_results(data) -> SearchResults:
     return SearchResults(**data)
 
 def extract_video_playlist(data) -> VideoPlaylist:
+    data['is_my_playlist'] = data.pop('myplaylist')
     data["videos"] = [extract_video(video) for video in data.pop('items',[])]
     return VideoPlaylist(**data)
 
 def extract_music_playlist(data) -> MusicPlaylist:
+    data['is_my_playlist'] = data.pop('myplaylist')
+    data['is_public'] = data.pop('public')
+    data['has_custom_photo'] = data.pop('custom_photo')
     data["sync"] = True if data.pop('sync', None) else False
     data["songs"] = [extract_song(song) for song in data.pop('items',[])]
     return MusicPlaylist(**data)
@@ -110,19 +116,17 @@ def extract_profile(data) -> Story:
     return Profile(**data)
 
 def extract_story(data) -> Story:
+    data['is_verified'] = data.pop('verified')
     data['lq_link'] = data.pop('hls')
     data["song_id"] = data.pop('mp3')
-    data['is_mystory'] = data.pop('myselfie',None)
+    data['is_my_story'] = data.pop('myselfie',None)
     data['user'] = extract_profile(data.pop('user'))
     return Story(**data)
-
-def extract_coming_soon(data):
-    return ComingSoon(**data)
 
 def extract_album(data):
     data["tracks"] = [extract_song(song) 
                     for song in data.pop('album_tracks')]
-    data['album'] = data.pop('album_album')
+    data['name'] = data.pop('album_album')
     data['artist'] = data.pop('album_artist')
     data['share_link'] = data.get('album_share_link','share_link')
     return Album(**data)

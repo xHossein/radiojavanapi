@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_podcast
-from radiojavanapi.types import Podcast
+from radiojavanapi.models import Podcast
 from radiojavanapi.helper import url_to_id
 
 from typing import Union
@@ -14,7 +14,7 @@ class PodcastMixin(PrivateRequest):
         """
         Get podcast info by site url (e.g. radiojavan.com/podcasts/podcast/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of podcast
 
@@ -29,7 +29,7 @@ class PodcastMixin(PrivateRequest):
         """
         Get podcast info by id
 
-        Parameters
+        Arguments
         ----------
             id: Unique id of podcast
 
@@ -46,7 +46,7 @@ class PodcastMixin(PrivateRequest):
         """
         Like a podcast
 
-        Parameters
+        Arguments
         ----------
             podcast_id: A digit id of podcast
 
@@ -61,7 +61,7 @@ class PodcastMixin(PrivateRequest):
         """
         UnLike a podcast
 
-        Parameters
+        Arguments
         ----------
             podcast_id: A digit id of podcast
 

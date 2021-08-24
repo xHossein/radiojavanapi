@@ -1,5 +1,5 @@
 from radiojavanapi.mixins.auth import AuthMixin
-from radiojavanapi.types import Account, MyPlaylists
+from radiojavanapi.models import Account, MyPlaylists
 from radiojavanapi.extractors import extract_account, extract_my_playlists
 
 from typing import List
@@ -31,9 +31,9 @@ class AccountMixin(AuthMixin):
                     ) -> Account:
         
         """
-        Change profile data (e.g. email, firstname, lastname, username).
+        Change profile data (e.g. email, firstname, ...).
 
-        Parameters
+        Arguments
         ----------
             firstname: Account's firstname
             lastname : Account's lastname
@@ -61,9 +61,9 @@ class AccountMixin(AuthMixin):
 
     def change_password(self, password: str) -> bool:
         """
-        Change your account's password
+        Change your account password
 
-        Parameters
+        Arguments
         ----------
         password: Your new password
 
@@ -95,7 +95,7 @@ class AccountMixin(AuthMixin):
         """
         Upload your profile photo (support jpg/png)
 
-        Parameters
+        Arguments
         ----------
         photo_path:
             Path to the image you want to upload
@@ -117,7 +117,7 @@ class AccountMixin(AuthMixin):
         return self.private_request('user_profile_update',
                     fields=fields , need_login=True).json()['success']
 
-    def remove_photo(self) -> Account:
+    def remove_photo(self) -> bool:
         """
         Remove your profile photo
 
@@ -127,7 +127,7 @@ class AccountMixin(AuthMixin):
 
         """
         account = self.account_edit(_remove_photo = True)
-        return account.custom_photo != True
+        return account.has_custom_photo != True
 
     def deactive_account(self) -> bool:
         """
@@ -145,7 +145,7 @@ class AccountMixin(AuthMixin):
 
     def my_following(self) -> List[str]:
         """
-        Get list of artists name which you follow
+        Get list of artist names which you've followed
 
         Returns
         -------

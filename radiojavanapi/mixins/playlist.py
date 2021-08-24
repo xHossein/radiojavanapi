@@ -1,7 +1,7 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_video_playlist, extract_music_playlist
 from radiojavanapi.helper import url_to_id
-from radiojavanapi.types import MusicPlaylist, VideoPlaylist
+from radiojavanapi.models import MusicPlaylist, VideoPlaylist
 
 from typing import Optional, Union
 from pydantic import HttpUrl
@@ -11,7 +11,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Get music playlist info by site url (e.g. radiojavan.com/playlists/playlist/mp3/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of music playlist
 
@@ -26,7 +26,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Get music playlist info by id
 
-        Parameters
+        Arguments
         ----------
             id: Unique id of music playlist
 
@@ -43,7 +43,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Follow a music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
 
@@ -61,7 +61,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         UnFollow a music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
 
@@ -80,7 +80,7 @@ class MusicPlayListMixin(PrivateRequest):
         Create a music playlist
         Note: in RJ you can't create empty playlist , so you need a song for creating playlist
 
-        Parameters
+        Arguments
         ----------
             name: Name of playlist
             song_id: A digit id of Song
@@ -99,7 +99,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Delete your music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
 
@@ -116,7 +116,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Rename your music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
             name: The name you want to set for a playlist
@@ -134,7 +134,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Add a song to your music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
             song_id: A digit id of Song
@@ -157,7 +157,7 @@ class MusicPlayListMixin(PrivateRequest):
         """
         Remove a song from your music playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of music playlist
             song_id: A digit id of Song
@@ -180,7 +180,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Get video playlist info by site url (e.g. radiojavan.com/playlists/playlist/video/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of video playlist
 
@@ -195,7 +195,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Get video playlist info by id
 
-        Parameters
+        Arguments
         ----------
             id: Unique id of video playlist
 
@@ -213,7 +213,7 @@ class VideoPlayListMixin(PrivateRequest):
         Create a video playlist
         Note: in RJ you can't create empty playlist , so you need a video for creating playlist
 
-        Parameters
+        Arguments
         ----------
             name: Name of playlist
             video_id: A digit id of Video
@@ -232,7 +232,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Delete your video playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of video playlist
 
@@ -249,7 +249,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Rename your video playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of video playlist
             name: The name you want to set for a playlist
@@ -267,7 +267,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Add a video to your video playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of video playlist
             video_id: A digit id of Video
@@ -290,7 +290,7 @@ class VideoPlayListMixin(PrivateRequest):
         """
         Remove a video from your video playlist
 
-        Parameters
+        Arguments
         ----------
             id: An id of video playlist
             video_id: A digit id of Video

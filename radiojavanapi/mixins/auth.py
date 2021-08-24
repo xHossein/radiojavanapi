@@ -10,10 +10,10 @@ class AuthMixin(PrivateRequest):
         """
         Log in to RadioJavan
 
-        Parameters
+        Arguments
         ----------
-            email: Your account's email
-            password: Your account's password
+            email: Your account email
+            password: Your account password
 
         Returns
         -------

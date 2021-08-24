@@ -1,6 +1,6 @@
 from radiojavanapi.mixins.private import PrivateRequest
 from radiojavanapi.extractors import extract_video
-from radiojavanapi.types import Video
+from radiojavanapi.models import Video
 from radiojavanapi.helper import url_to_id
 
 from typing import List, Union
@@ -14,7 +14,7 @@ class VideoMixin(PrivateRequest):
         """
         Get video info by site url (e.g. radiojavan.com/videos/video/...)
 
-        Parameters
+        Arguments
         ----------
             url: Site url of video
 
@@ -29,7 +29,7 @@ class VideoMixin(PrivateRequest):
         """
         Get video info by id
 
-        Parameters
+        Arguments
         ----------
             id: Unique id of video
 
@@ -46,7 +46,7 @@ class VideoMixin(PrivateRequest):
         """
         Like a video
 
-        Parameters
+        Arguments
         ----------
             video_id: A digit id of Video
 
@@ -61,7 +61,7 @@ class VideoMixin(PrivateRequest):
         """
         UnLike a video
 
-        Parameters
+        Arguments
         ----------
             video_id: A digit id of Video
 
