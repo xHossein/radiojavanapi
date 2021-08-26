@@ -145,7 +145,7 @@ class AccountMixin(AuthMixin):
             return True
         return False
 
-    def my_following(self) -> List[str]:
+    def following_artists(self) -> List[str]:
         """
         Get list of artist names which you've followed
 
