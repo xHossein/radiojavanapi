@@ -25,11 +25,17 @@ Available attributes:
 `display_name` | `str` | The name which shows to other users
 `username` | `str` | Your account username
 `email` | `str` | Your account email
+`bio` | `Optional[str]` | Your account bio
 `share_link` | `HttpUrl` | Your profile url
 `has_subscription` | `bool` | Status of subscription
 `has_custom_photo` | `bool` | Its true when you have profile photo
+`is_verified` | `bool` | Status of verification
+`default_photo` | `HttpUrl` | Default photo url
+`default_thumbnail` | `HttpUrl` | Default thumbnail url
 `photo` | `HttpUrl` | Current photo url
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
+`followers_count` | `int` | Followers count
+`following_count` | `int` | Following count
 `playlists_count` | `int` | Number of playlists you have in your library
 `songs_count` | `int` | Number of songs you have in your library
 `artists_count` | `int` | Number of artists you've followed
@@ -80,7 +86,7 @@ Available attributes:
 `album` | `Optional[str]` | Album name
 `date` | `Optional[str]` | IDK! RJ api sent everything except date!
 `duration` | `float` | Song duration
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
 `lyric` | `Optional[str]` | Song lyric
 `related_songs` | `list[`[ShortData](#shortdata)`]` | Related songs
 `stories` | `list[`[Story](#story)`]` | Stories with that song
@@ -194,7 +200,7 @@ Available attributes:
 `date` | `str` | IDK! RJ api sent everything except date!
 `short_date` | `str` | Same as `date`
 `duration` | `float` | Song duration
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
 `tracklist` | `Optional[str]` | Podcast track list (contains new line `\n`)
 `related_podcasts` | `list[`[ShortData](#shortdata)`]` | Related podcasts
 
@@ -221,7 +227,7 @@ Available attributes:
 `plays` | `str` | Plays count (e.g. `2M`)
 `photo` | `HttpUrl` | Photo url
 `photo_player` | `HttpUrl` | Player photo url
-`photo_thumb` | `HttpUrl` | Thumbnail photo url
+`photo_thumb` | `HttpUrl` | Thumbnail url
 `background` | `HttpUrl` | Background photo url
 `share_link` | `HttpUrl` | Artist url
 `following` | `bool` | Its true if you following that artist
@@ -269,26 +275,69 @@ Available attributes:
 `filename` | `str` | File name
 `share_link` | `HttpUrl` | Story url
 `photo` | `HttpUrl` | Photo url
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
 `is_verified` | `bool` | Status of user or story verification
 `likes` | `str` | Story likes count
 `likes_pretty` | `str` | Story likes count in pretty format
-`user` | `list[`[Profile](#profile)`]` | The owner of story
+`user` | `list[`[User](#user)`]` | The owner of story
 `is_my_story` | `bool` | Its true if you are the owner
 
-## Profile
-This models a profile on RadioJavan.
+## User
+This models a user on RadioJavan.
 
 
 ### Attributes <!-- {docsify-ignore} -->
-> Read-only values on a Profile object
+> Read-only values on a User object
 
 
 
 Example:
 
 ```python
-profileObj.tracks
+userObj.tracks
+```
+
+Available attributes:
+
+| Name | Type | Description
+-------|------|------------
+`name` | `str` | User's name
+`firstname` | `str` | User's firstname
+`lastname` | `str` | User's lastname
+`display_name` | `str` | The name which shows to other users
+`username` | `str` | User's username
+`bio` | `Optional[str]` | User's bio
+`share_link` | `HttpUrl` | User profile url
+`has_subscription` | `bool` | Status of subscription
+`has_custom_photo` | `bool` | Its true when user has profile photo
+`is_verified` | `bool` | Status of verification
+`default_photo` | `HttpUrl` | Default photo url
+`default_thumbnail` | `HttpUrl` | Default thumbnail url
+`photo` | `HttpUrl` | Current photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
+`followers_count` | `int` | Followers count
+`following_count` | `int` | Following count
+`following` | `Optional[bool]` | Its true if you following this user
+`playlists_count` | `int` | Number of playlists user has
+`songs_count` | `int` | Number of songs user has in library
+`artists_count` | `int` | Number of artists user has followed
+`artists_name` | `list[str]` | Name of artists user has followed
+`stories` | `list[`[Story](#story)`]` | Stories user has uploaded on RJ
+`music_playlists` | `list[`[ShortData](#shortdata)`]` | User music (mp3) playlists
+
+## ShortUser
+This models a user with small data. To get full data you must use [Get Info](methods?id=get-info) methods with User's username.
+
+
+### Attributes <!-- {docsify-ignore} -->
+> Read-only values on a ShortUser object
+
+
+
+Example:
+
+```python
+shortuserObj.tracks
 ```
 
 Available attributes:
@@ -297,7 +346,8 @@ Available attributes:
 -------|------|------------
 `display_name` | `str` | The name which users see
 `username` | `str` | Username
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
+`share_link` | `Optional[HttpUrl]` | Thumbnail url
 
 ## MusicPlaylist
 This models a music (song or mp3) playlist on RadioJavan.
@@ -333,7 +383,7 @@ Available attributes:
 `has_custom_photo` | `bool` | Its true when it has a custom photo
 `photo` | `HttpUrl` | Photo url
 `photo_player` | `Optional[HttpUrl]` | Player photo url
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
 `songs` | `list[`[Song](#song)`]` | All songs which in playlist
 
 ## VideoPlaylist
@@ -363,7 +413,7 @@ Available attributes:
 `share_link` | `HttpUrl` | Playlist url
 `photo` | `HttpUrl` | Photo url
 `photo_player` | `Optional[HttpUrl]` | Player photo url
-`thumbnail` | `HttpUrl` | Thumbnail photo url
+`thumbnail` | `HttpUrl` | Thumbnail url
 `is_my_playlist` | `bool` | Its true if you are the owner
 `videos` | `list[`[Video](#video)`]` | All videos which in playlist
 
@@ -393,12 +443,12 @@ Available attributes:
 `podcasts` | `list[`[ShortData](#shortdata)`]` | All podcasts which found by search
 `music_playlists` | `list[`[ShortData](#shortdata)`]` | All song (mp3) playlists which found by search
 `shows` | `list[`[ShortData](#shortdata)`]` | All shows which found by search
-`profiles` | `list[`[Profile](#profile)`]` | All profiles which found by search
+`users` | `list[`[User](#user)`]` | All users which found by search
 `artist_names` | `list[str]` | Name of all artists which found by search
 
 
 ## ShortData
-This models medias with small data. To get full data you must use [Get Medias](methods?id=get-medias) methods with media id.
+This models medias with small data. To get full data you must use [Get Info](methods?id=get-info) methods with id or name.
 
 
 ### Attributes <!-- {docsify-ignore} -->

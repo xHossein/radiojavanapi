@@ -57,6 +57,7 @@ For [Actions](methods?id=actions) and [Account](methods?id=account) methods, you
 from radiojavanapi import Client
 from radiojavanapi.exceptions import BadCredentials
 
+client = Client()
 try:
     client.login("YOUR EMAIL", "YOUR PASSWORD")
 except BadCredentials:

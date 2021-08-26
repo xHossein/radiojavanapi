@@ -9,10 +9,11 @@
 
 ## Features
 
-* Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, Profile and your Account
+* Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
 * Login by email and password
-* Like or Unlike a Song, Video, Podcast and Story
-* Follow and Unfollow a Artist or MusicPlaylist
+* Like and Unlike a Song, Video, Podcast and Story
+* Follow and Unfollow a Artist, User or MusicPlaylist
+* Get followers and following of a user
 * Create, Rename and Delete a playlist
 * Add song or video to playlist or Remove from it
 * Edit and Deactive account

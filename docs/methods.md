@@ -6,13 +6,18 @@ All account methods require authentication.
 ?> **Radiojavanapi Docs:** Check [here](quick-start?id=login-to-rj) for login by email and password.
 
 ### Activity
-Get list of song, video and ... you've liked befor or list of artist you're following now.
+- Get list of:
+    - Your followers & following
+    - Song & video you've liked befor
+    - Artist you're following now.
 
 Method | Return | Description | Login Required
 -------|------------|-------------|--------------
 liked_songs() | `list[`[Song](models?id=song)`]` | Returns list of songs you've liked | YES
 liked_videos() | `list[`[Video](models?id=video)`]` | Returns list of videos you've liked | YES
-my_following() | `list[str]` | Returns list of artist names which you've followed | YES
+following_artists() | `list[str]` | Returns list of artist names which you've followed | YES
+my_followers() | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of your followers | YES
+my_following() | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of your following| YES
 my_playlists() | [MyPlaylists](models?id=myplaylists) | Returns your video & music playlist's | YES
 
 ### Update
@@ -20,10 +25,12 @@ Update your account.
 
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-account_edit() | <ul><li>`(Optional) firstname: str`</li><br/><li>`(Optional) lastname: str`</li><br/><li>`(Optional) username: str`</li><br/><li>`(Optional) email: str`</li></ul> | [Account](models?id=account) | Change profile data | YES
+account_edit() | <ul><li>`(Optional) firstname: str`</li><br/><li>`(Optional) lastname: str`</li><br/><li>`(Optional) username: str`</li><br/><li>`(Optional) email: str`</li><br/><li>`(Optional) bio: str`</li></ul> | [Account](models?id=account) | Change profile data | YES
 change_password() | `password: str`<br/>`(Your new passowrd)` | `bool` | Change your account password | YES
 upload_photo() | `photo_path: str` | `bool` | Upload your profile photo (only jpg/png) | YES
 remove_photo() |   | `bool` | Remove your profile photo | YES
+
+!> To remove bio, pass an empty string.
 
 ### Others
 Method | Return | Description | Login Required
@@ -58,6 +65,8 @@ Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
 follow_artist() | `name: str` | `bool` | Follow a artist | YES
 unfollow_artist() | `name: str` | `bool` | Unfollow a artist | YES
+follow_user() | `username: str` | `bool` | Follow a user | YES
+unfollow_user() | `username: str` | `bool` | Unfollow a user | YES
 follow_music_playlist() | `id: str` | `bool` | Follow a music (song or mp3) playlist | YES
 unfollow_music_playlist() | `id: str` | `bool` | Unfollow a music (song or mp3) playlist | YES
 
@@ -86,8 +95,8 @@ remove_from_video_playlist() | <ul><li>`id: str`</li><br/><li>`video_id: Union[i
 !> **Add methods**: returns false if song/video had been added already\
 **Remove methods**: returns false if song/video hadn't been added before
 
-## Get Medias
-Get medias info as their [models](models).
+## Get Info
+Get medias & users info as their [models](models).
 
 > All methods work with out authentication too.
 
@@ -138,6 +147,14 @@ get_music_playlist_by_id() | `id: str` | [MusicPlaylist](models?id=musicplaylist
 get_video_playlist_by_url() | `url: HttpUrl` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by site url (e.g. `radiojavan.com/playlists/playlist/video/...`) | NO
 get_video_playlist_by_id() | `id: str` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by id | NO
 
+### User <!-- {docsify-ignore} -->
+Method | Arguments | Return | Description | Login Required
+-------|----------|--------|-------------|--------------
+get_user_by_url() | `url: HttpUrl` | [User](models?id=user) | Returns user info by site url (e.g. `radiojavan.com/u/...`) | NO
+get_user_by_username() | `username: str` | [User](models?id=user) | Returns user info by username | NO
+get_user_followers() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user followers | NO
+get_user_following() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user following | NO
+
 
 ## Search
 Search on RadioJavan and get results as [SearchResults](models?id=searchresults).
@@ -176,7 +193,7 @@ Get stream links and ... .
 
 > All methods work with out authentication too.
 
-Method | Arguments | Description | Login Required
+Method | Return | Description | Login Required
 -------|-----------|-------------|--------------
 get_trending_searches() | `list[str]` | Returns list of trending searches | NO
 get_tv_stream() | `str` | Returns RJ tv stream link | NO
