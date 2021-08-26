@@ -153,7 +153,7 @@ class Artist(BaseModel):
     background: HttpUrl
     photo: HttpUrl
     photo_player: HttpUrl
-    photo_thumb: HttpUrl
+    photo_thumbnail: HttpUrl
     share_link: HttpUrl
     prereleases: List = []
     events: List = []

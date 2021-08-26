@@ -60,6 +60,7 @@ def extract_podcast(data) -> Podcast:
     return Podcast(**data)
 
 def extract_artist(data) -> Artist:
+    data["photo_thumbnail"] = data.pop('photo_thumb')
     data["latest_song"] = extract_short_data(data.pop('latest'), Song) if data.get('latest') else None
     data['name'] = data.pop('query')
     followers = data.pop('followers')

@@ -5,7 +5,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text(encoding='utf-8')
 
 requirements = [
-    'requests==2.26.0',
+    'requests==2.25.1',
     'requests-toolbelt==0.9.1',
     'PySocks==1.7.1',
     'pydantic==1.8.1'
@@ -13,12 +13,14 @@ requirements = [
 
 setup(
     name='radiojavanapi',
-    version='0.2.0',
+    version='0.2.2',
     author='xHossein',
     license='MIT',
     url='https://github.com/xHossein/radiojavanapi',
     install_requires=requirements,
-    keywords='radiojavan private api',
+    keywords=['radiojavan private api','radiojavan-private-api','radiojavan api','radiojavan-api',
+              'rj api','rj-api','radiojavan','radio javan','radio-javan'
+    ],
     description='Fast and effective RadioJavan API Wrapper',
     long_description=README,
     long_description_content_type='text/markdown',
