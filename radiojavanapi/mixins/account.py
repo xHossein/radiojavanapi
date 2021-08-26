@@ -14,11 +14,7 @@ class AccountMixin(AuthMixin):
             Account: An object of Account type
 
         """
-        response = self.private_request('user_profile',
-                                        params='stats=1',
-                                        need_login=True).json()
-        response['has_subscription'] = self.private_request('user_subscription',
-                                            need_login=True).json()['success']
+        response = self.private_request('user_profile', need_login=True).json()
         return extract_account(response)
     
 
@@ -27,11 +23,13 @@ class AccountMixin(AuthMixin):
                      lastname: str = None,
                      username: str = None,
                      email: str = None,
+                     bio: str = None,
                     _remove_photo: bool = False
                     ) -> Account:
         
         """
         Change profile data (e.g. email, firstname, ...).
+        Note: To remove bio, pass empty string.
 
         Arguments
         ----------
@@ -54,6 +52,9 @@ class AccountMixin(AuthMixin):
         }
         if _remove_photo:
             payload.update({"remove_photo": True})
+            
+        if bio != None:
+            payload.update({"bio": bio})
 
         self.private_request('user_profile_update',
                              json=payload, need_login=True)

@@ -6,14 +6,16 @@ from radiojavanapi.models import (
             )
 
 def extract_account(data) -> Account:
+    data["default_thumbnail"] = data.pop('default_thumb')
+    data["has_subscription"] = data.pop('subscription')
     data["has_custom_photo"] = data.pop('custom_photo')
+    data["is_verified"] = data.pop('verify')
     data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
     data["stories"] = [extract_story(story) 
                     for story in data.pop('selfies',[])]
     return Account(**data)
 
 def extract_user(data) -> User:
-    data["fullname"] = data.pop('name')
     data["default_thumbnail"] = data.pop('default_thumb')
     data["has_custom_photo"] = data.pop('custom_photo')
     data["has_subscription"] = data.pop('subscription')

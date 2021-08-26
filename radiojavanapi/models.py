@@ -44,7 +44,7 @@ class Story(BaseModel):
     is_my_story: Optional[bool]
 
 class User(BaseModel):
-    fullname: str
+    name: str
     firstname: str
     lastname: str
     display_name: Optional[str]
@@ -77,15 +77,21 @@ class Account(BaseModel):
     username: str
     share_link: HttpUrl
     email: str
+    bio: Optional[str]
+    default_photo: HttpUrl
+    default_thumbnail: HttpUrl
     has_subscription : bool
     has_custom_photo : bool
+    is_verified: bool
     photo: HttpUrl
     thumbnail: HttpUrl
+    followers_count: str
+    following_count: str
     playlists_count: int
     songs_count: int
     artists_count : int
-    artists_name: List[str] = []
     stories: List[Story] = []
+    artists_name: List[str] = []
 
 class RJBaseModel(BaseModel):
     created_at: str
