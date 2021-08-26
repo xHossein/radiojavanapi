@@ -6,7 +6,6 @@ from radiojavanapi.mixins.playlist import MusicPlayListMixin, VideoPlayListMixin
 from radiojavanapi.mixins.podcast import PodcastMixin
 from radiojavanapi.mixins.video import VideoMixin
 from radiojavanapi.mixins.account import AccountMixin
-from radiojavanapi.mixins.user import UserMixin
 
 class Client(
             AccountMixin,
@@ -17,8 +16,7 @@ class Client(
             VideoPlayListMixin,
             MusicPlayListMixin,
             StoryMixin,
-            AlbumMixin,
-            UserMixin
+            AlbumMixin
             ):
     """
     Class used to access all features, this is the only class that 

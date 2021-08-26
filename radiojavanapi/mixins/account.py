@@ -1,10 +1,11 @@
+from radiojavanapi.mixins.user import UserMixin
 from radiojavanapi.mixins.auth import AuthMixin
-from radiojavanapi.models import Account, MyPlaylists
+from radiojavanapi.models import Account, MyPlaylists, ShortUser
 from radiojavanapi.extractors import extract_account, extract_my_playlists
 
 from typing import List
 
-class AccountMixin(AuthMixin):
+class AccountMixin(AuthMixin, UserMixin):
     def account_info(self) -> Account:
         """
         Get private info for your account
@@ -156,6 +157,28 @@ class AccountMixin(AuthMixin):
         """
         return self.account_info().artists_name
 
+    def my_followers(self) -> List[ShortUser]:
+        """
+        Get list of your followers
+
+        Returns
+        -------
+            List[ShortUser]: list of your followers as ShortUser object
+
+        """
+        return self.get_user_followers(self.account_info().username)
+    
+    def my_following(self) -> List[ShortUser]:
+        """
+        Get list of user which you've followed
+
+        Returns
+        -------
+            List[ShortUser]: list of your following as ShortUser object
+
+        """
+        return self.get_user_following(self.account_info().username)
+    
     def my_playlists(self) -> MyPlaylists:
         """
         Get your MusicPlaylist & VideoPlaylist' shortdata as MyPlaylists Object
