@@ -1,7 +1,7 @@
 from radiojavanapi.helper import to_int
 from radiojavanapi.models import (
             Account, Album, Artist, MyPlaylists,
-            Profile, Song, MusicPlaylist, Story, Video,
+            ShortUser, Song, MusicPlaylist, Story, User, Video,
             ShortData, Podcast, SearchResults, VideoPlaylist
             )
 
@@ -11,6 +11,19 @@ def extract_account(data) -> Account:
     data["stories"] = [extract_story(story) 
                     for story in data.pop('selfies',[])]
     return Account(**data)
+
+def extract_user(data) -> User:
+    data["fullname"] = data.pop('name')
+    data["default_thumbnail"] = data.pop('default_thumb')
+    data["has_custom_photo"] = data.pop('custom_photo')
+    data["has_subscription"] = data.pop('subscription')
+    data["is_verified"] = data.pop('verify')
+    data["artists_name"] = [artist["name"] for artist in data.pop('artists')]
+    data["stories"] = [extract_story(story) 
+                    for story in data.pop('selfies',[])]
+    data["music_playlists"] = [extract_short_data(playlist['playlist'], MusicPlaylist)
+                                for playlist in data.pop('playlists')]
+    return User(**data)
 
 def extract_song(data) -> Song:
     album = data.pop('album', None)
@@ -93,7 +106,7 @@ def extract_search_results(data) -> SearchResults:
     data["videos"] = [extract_short_data(video, Video) for video in data.pop('videos')]
     data["podcasts"] = [extract_short_data(podcasts, Podcast) for podcasts in data.pop('podcasts')]
     data["shows"] = [extract_short_data(show, 'show') for show in data.pop('shows')]
-    data["profiles"] = [extract_profile(profile) for profile in data.pop('profiles')]
+    data["users"] = [extract_short_user(profile) for profile in data.pop('profiles')]
     data["artist_names"] = [artist["name"] for artist in data.pop('artists')]
     data["music_playlists"] = [extract_short_data(playlist['playlist'], MusicPlaylist)
                                                     for playlist in data.pop('playlists')]
@@ -112,15 +125,15 @@ def extract_music_playlist(data) -> MusicPlaylist:
     data["songs"] = [extract_song(song) for song in data.pop('items',[])]
     return MusicPlaylist(**data)
 
-def extract_profile(data) -> Story:
-    return Profile(**data)
+def extract_short_user(data) -> Story:
+    return ShortUser(**data)
 
 def extract_story(data) -> Story:
     data['is_verified'] = data.pop('verified')
     data['lq_link'] = data.pop('hls')
     data["song_id"] = data.pop('mp3')
     data['is_my_story'] = data.pop('myselfie',None)
-    data['user'] = extract_profile(data.pop('user'))
+    data['user'] = extract_short_user(data.pop('user'))
     return Story(**data)
 
 def extract_album(data):

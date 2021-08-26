@@ -1,10 +1,11 @@
 from typing import List, Optional, Union
 from pydantic import BaseModel, HttpUrl
 
-class Profile(BaseModel):
+class ShortUser(BaseModel):
     thumbnail: HttpUrl
     username: Optional[str]
     display_name: str
+    share_link: Optional[HttpUrl]
 
 class ShortData(BaseModel):
     id: Union[int, str]
@@ -38,10 +39,36 @@ class Story(BaseModel):
     is_verified: bool
     likes: str
     likes_pretty: str
-    user: Profile
+    user: ShortUser
     location: str
     is_my_story: Optional[bool]
 
+class User(BaseModel):
+    fullname: str
+    firstname: str
+    lastname: str
+    display_name: Optional[str]
+    username: Optional[str]
+    share_link: HttpUrl
+    display_name: Optional[str]
+    bio: Optional[str]
+    default_photo: HttpUrl
+    default_thumbnail: HttpUrl
+    photo: HttpUrl
+    has_custom_photo: bool
+    thumbnail: HttpUrl
+    followers_count: str
+    following_count: str
+    has_subscription : bool
+    is_verified: bool
+    following: bool
+    playlists_count: int
+    songs_count: int
+    artists_count: int
+    artists_name: List[str] = []
+    stories: List[Story] = []
+    music_playlists: List[ShortData] = []
+    
 class Account(BaseModel):
     name: str
     firstname: str
@@ -144,7 +171,7 @@ class SearchResults(BaseModel):
     podcasts: List[ShortData] = []
     music_playlists: List[ShortData] = []
     shows: List[ShortData] = []
-    profiles: List[Profile] = []
+    users: List[ShortUser] = []
     artist_names: List[str] = []
     
 
