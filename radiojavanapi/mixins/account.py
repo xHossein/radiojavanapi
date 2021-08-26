@@ -106,16 +106,17 @@ class AccountMixin(AuthMixin):
 
         """
         account = self.account_info()
-        fields = {
-            'firstname': account.firstname,
-            'lastname': account.lastname,
-            'email': account.email,
-            'username': account.username,
-            'remove_photo': 'undefined',
-            'photo': ('0', open(photo_path, 'rb'), 'image/jpeg')
-        }
-        return self.private_request('user_profile_update',
-                    fields=fields , need_login=True).json()['success']
+        with open(photo_path, 'rb') as photo:
+            fields = {
+                'firstname': account.firstname,
+                'lastname': account.lastname,
+                'email': account.email,
+                'username': account.username,
+                'remove_photo': 'undefined',
+                'photo': ('0', photo, 'image/jpeg')
+            }
+            return self.private_request('user_profile_update',
+                        fields=fields , need_login=True).json()['success']
 
     def remove_photo(self) -> bool:
         """
