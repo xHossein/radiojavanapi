@@ -35,6 +35,9 @@ class DuplicateName(PrivateError):
 class InvalidMediaId(PrivateError):
     pass
 
+class InvalidEmail(PrivateError):
+    pass
+
 class DuplicatePassword(PrivateError):
     pass
     

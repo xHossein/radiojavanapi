@@ -1,7 +1,7 @@
 from radiojavanapi.constants import API_DOMAIN, BASE_HEADERS
 from radiojavanapi.exceptions import (
                 BadCredentials, ClientJSONDecodeError, ClientConnectionError, DuplicatePassword,
-                EmailExists, ClientLoginRequired, LongString, InvalidName, DuplicateName,
+                EmailExists, ClientLoginRequired, InvalidEmail, LongString, InvalidName, DuplicateName,
                 UnknownError, UsernameExists, ClientLoginRequired, InvalidMediaId
                 )
 
@@ -73,6 +73,8 @@ class PrivateRequest():
                     raise DuplicateName(msg)
                 elif 'new password cannot be the same' in msg:
                     raise DuplicatePassword(msg)
+                elif 'need a valid email' in msg:
+                    raise InvalidEmail(msg)
                 else: # TO DO
                     raise UnknownError(msg)
                 
