@@ -13,7 +13,7 @@ requirements = [
 
 setup(
     name='radiojavanapi',
-    version='0.2.2',
+    version='0.3.0',
     author='xHossein',
     license='MIT',
     url='https://github.com/xHossein/radiojavanapi',
@@ -24,7 +24,7 @@ setup(
     description='Fast and effective RadioJavan API Wrapper',
     long_description=README,
     long_description_content_type='text/markdown',
-    packages=find_packages(),
+    packages=find_packages(exclude=['*tests*']),
     python_requires=">=3.7",
     include_package_data=True,
     classifiers=[
