@@ -1,3 +1,4 @@
+import json
 from radiojavanapi.mixins.song import SongMixin
 from radiojavanapi.mixins.album import AlbumMixin
 from radiojavanapi.mixins.story import StoryMixin
@@ -23,11 +24,27 @@ class Client(
     needs to be imported (along with the exceptions)
     """
         
-    def set_proxy(self,proxy:dict) -> None:
+    def set_proxy(self, proxy:dict) -> None:
         assert isinstance(proxy, dict), f'Proxy must been Dict, but now "{proxy}" ({type(proxy)})'
         self.private.proxies = self.proxy = proxy
 
     def unset_proxy(self) -> None:
         self.private.proxies = self.proxy = None
+        
+    def save_session(self, path: str) -> bool:
+        with open(path, 'w') as wf:
+            json.dump({
+                'cookie': self.cookie,
+                'email': self.email
+                }, wf, indent=4)
+        return True
     
-    
+    def load_session(self, path: str) -> bool:
+        with open(path, 'r') as rf:
+            json_data = json.load(rf)
+            self.initial()
+            self.authorized = True
+            self.cookie = json_data['cookie']
+            self.email = json_data['email']
+            self.private.headers.update({'Cookie': self.cookie})
+        return True 
