@@ -1,9 +1,79 @@
 # Methods
 
+## Authentication
+For [Actions](methods?id=actions) and [Account](methods?id=account) methods, you must have an account.
+
+### Login
+Arguments:
+
+| Name | Type | Description
+-------|------|------------
+`email` | `str` | Your account email
+`password` | `str` | Your account password
+
+Example:
+```python
+from radiojavanapi import Client
+from radiojavanapi.exceptions import BadCredentials
+
+client = Client()
+try:
+    client.login("YOUR EMAIL", "YOUR PASSWORD")
+except BadCredentials:
+    # raise due to wrong email or password
+    # do something
+    pass
+
+song = client.get_song_by_url(
+            'https://www.radiojavan.com/mp3s/mp3/Sijal-Baz-Mirim-Baham-(Ft-Sami-Low)')
+
+print(client.like_song(song.id))
+print(client.follow_artist(song.artist))
+```
+<details>
+    <summary>Show Output</summary>
+
+```
+True
+True
+```
+</details>
+
+### Sign Up
+
+Arguments:
+
+| Name | Type | Description
+-------|------|------------
+`firstname` | `str` | Your account firstname
+`lastname` | `str` | Your account lastname
+`username` | `str` | Your account username
+`email` | `str` | Your account email
+`password` | `str` | Your account password
+`auto_login` | `bool` | Login to account after sign up
+
+Example:
+```python
+from radiojavanapi import Client
+
+client = Client()
+client.signup("YOUR FIRSTNAME", "YOUR LASTNAME", "YOUR USERNAME", "YOUR EMAIL", "YOUR PASSWORD", True)
+```
+
+### Save & Load session
+You can save your session like this:
+```python
+clientObj.save_session('./myaccount')
+```
+And you can load your session as well to avoid many logins:
+```python
+clientObj.load_session('./myaccount')
+```
+
 ## Account
 All account methods require authentication.
 
-?> **Radiojavanapi Docs:** Check [here](quick-start?id=login-to-rj) for login by email and password.
+?> **Radiojavanapi Docs:** Check [here](methods?id=authentication) for login or sign up.
 
 ### Activity
 - Get list of:
@@ -42,7 +112,7 @@ deactive_account() | `bool` | Deactivate your account and logout | YES
 ## Actions
 All action methods require authentication.
 
-?> **Radiojavanapi Docs:** Check [here](quick-start?id=login-to-rj) for login by email and password.
+?> **Radiojavanapi Docs:** Check [here](methods?id=authentication) for login or sign up.
 
 ### Like & Unlike
 

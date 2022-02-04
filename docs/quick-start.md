@@ -50,32 +50,3 @@ HQ-Link: https://host2.mediacon-rj.app/media/mp3/aac-256/99926-cf9dd3814907dbb.m
 </details>
 
 !> Please note that `set_proxy` only gets proxy as dict.
-
-## Login to RJ
-For [Actions](methods?id=actions) and [Account](methods?id=account) methods, you must have an account.
-```python
-from radiojavanapi import Client
-from radiojavanapi.exceptions import BadCredentials
-
-client = Client()
-try:
-    client.login("YOUR EMAIL", "YOUR PASSWORD")
-except BadCredentials:
-    # raise due to wrong email or password
-    # do something
-    pass
-
-song = client.get_song_by_url(
-            'https://www.radiojavan.com/mp3s/mp3/Sijal-Baz-Mirim-Baham-(Ft-Sami-Low)')
-
-print(client.like_song(song.id))
-print(client.follow_artist(song.artist))
-```
-<details>
-    <summary>Show Output</summary>
-
-```
-True
-True
-```
-</details>

@@ -11,6 +11,7 @@
 
 * Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
 * Login by email and password
+* Sign up to RadioJavan
 * Like and Unlike a Song, Video, Podcast and Story
 * Follow and Unfollow a Artist, User or MusicPlaylist
 * Get followers and following of a user
