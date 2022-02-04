@@ -7,10 +7,12 @@
 
 Support Python >= 3.7
 
-RadioJavan API valid for 24 August 2021 (last reverse-engineering check)
+RadioJavan API valid for 4 February 2022 (last reverse-engineering check)
 
+## Features
 * Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
 * Login by email and password
+* Sign up to RadioJavan
 * Like and Unlike a Song, Video, Podcast and Story
 * Follow and Unfollow a Artist, User or MusicPlaylist
 * Get followers and following of a user
