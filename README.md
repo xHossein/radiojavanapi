@@ -7,7 +7,7 @@
 
 Support Python >= 3.7
 
-RadioJavan API valid for 4 February 2022 (last reverse-engineering check)
+RadioJavan API valid for 14 January 2023 (last reverse-engineering check)
 
 ## Features
 * Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
