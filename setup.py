@@ -13,7 +13,7 @@ requirements = [
 
 setup(
     name='radiojavanapi',
-    version='0.3.0',
+    version='0.4.0',
     author='xHossein',
     license='MIT',
     url='https://github.com/xHossein/radiojavanapi',
@@ -35,5 +35,6 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ]
 )
