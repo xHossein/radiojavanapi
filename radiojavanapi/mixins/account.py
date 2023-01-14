@@ -1,7 +1,7 @@
 from radiojavanapi.mixins.user import UserMixin
 from radiojavanapi.mixins.auth import AuthMixin
-from radiojavanapi.models import Account, MyPlaylists, ShortUser
-from radiojavanapi.extractors import extract_account, extract_my_playlists
+from radiojavanapi.models import Account, MyPlaylists, NotificationsStatus, ShortUser
+from radiojavanapi.extractors import extract_account, extract_my_playlists, extract_notifications_status
 
 from typing import List
 
@@ -61,6 +61,44 @@ class AccountMixin(AuthMixin, UserMixin):
                              json=payload, need_login=True)
         return self.account_info()
 
+    def account_notifications(self) -> NotificationsStatus:
+        """
+        Get current status of account notifications settings
+
+        Returns
+        -------
+            NotificationsStatus: An object of NotificationsStatus type which holds current settings
+
+        """
+        response = self.private_request('user_notifications', need_login=True).json()
+        return extract_notifications_status(response)
+    
+    def account_notifications_update(self, 
+                    new_music: bool = None,
+                    followed_artists: bool = None,
+                    ) -> bool:
+        
+        """
+        Update account notifications settings.
+
+        Arguments
+        ----------
+            new_music: Send occasional email notifications new music.
+            followed_artists : Send email notifications about artists that you follow.
+            
+        Returns
+        -------
+            bool: Returns true if success
+
+        """
+        acc_notif = self.account_notifications()
+        payload = {
+            'music_email'     : str(int(new_music if new_music != None else acc_notif.music_email)),
+            'artists_email'   : str(int(followed_artists if followed_artists != None else acc_notif.artists_email))
+        }
+        return self.private_request('user_notifications_update',
+                             json=payload, need_login=True).json()['success']
+    
     def change_password(self, password: str) -> bool:
         """
         Change your account password

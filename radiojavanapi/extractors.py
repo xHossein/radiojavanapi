@@ -1,6 +1,6 @@
 from radiojavanapi.helper import to_int
 from radiojavanapi.models import (
-            Account, Album, Artist, MyPlaylists,
+            Account, Album, Artist, MyPlaylists, NotificationsStatus,
             ShortUser, Song, MusicPlaylist, Story, User, Video,
             ShortData, Podcast, SearchResults, VideoPlaylist
             )
@@ -154,4 +154,6 @@ def extract_my_playlists(data):
                 "video_playlists": [extract_short_data(vpl, VideoPlaylist)
                                     for vpl in data['videos']['myplaylists']]
                 })
-
+    
+def extract_notifications_status(data) -> NotificationsStatus:
+    return NotificationsStatus(**data)

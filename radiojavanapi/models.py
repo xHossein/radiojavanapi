@@ -221,3 +221,12 @@ class Album(BaseModel):
     name: str
     artist: str
     share_link: HttpUrl
+     
+class NotificationsStatus(BaseModel):
+    artists_email: bool
+    artists_push: bool
+    events_push: bool
+    music_email: bool
+    music_push: bool
+    playlists_followers_push: bool
+    selfies_push: bool
