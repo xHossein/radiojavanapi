@@ -1,4 +1,4 @@
-# radiojavanapi <small>0.3.0</small>
+# radiojavanapi <small>0.4.0</small>
 
 > Fast and effective [RadioJavan](https://radiojavan.com/) API wrapper in python
 
