@@ -497,3 +497,31 @@ Available attributes:
 -------|------|------------
 `music_playlists` | `list[`[ShortData](#shortdata)`]` | Your song (mp3) playlists
 `video_playlists` | `list[`[ShortData](#shortdata)`]` | Your video plyalists
+
+
+## NotificationsStatus
+This models your current status of notifications settings on RadioJavan.
+
+
+### Attributes <!-- {docsify-ignore} -->
+> Read-only values on a NotificationsStatus object
+
+
+
+Example:
+
+```python
+notifObj.artists_email
+```
+
+Available attributes:
+
+| Name | Type 
+-------|------
+`artists_email` | `bool`
+`artists_push` | `bool`
+`events_push` | `bool`
+`music_email` | `bool`
+`music_push` | `bool`
+`playlists_followers_push` | `bool` 
+`selfies_push` | `bool` 

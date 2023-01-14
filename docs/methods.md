@@ -96,6 +96,7 @@ Update your account.
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
 account_edit() | <ul><li>`(Optional) firstname: str`</li><br/><li>`(Optional) lastname: str`</li><br/><li>`(Optional) username: str`</li><br/><li>`(Optional) email: str`</li><br/><li>`(Optional) bio: str`</li></ul> | [Account](models?id=account) | Change profile data | YES
+account_notifications_update() | <ul><li>`(Optional) new_music: bool`</li><br/><li>`(Optional) followed_artists: bool`</li><br/></ul> | `bool` | Update your notifications settings | YES
 change_password() | `password: str`<br/>`(Your new passowrd)` | `bool` | Change your account password | YES
 upload_photo() | `photo_path: str` | `bool` | Upload your profile photo (only jpg/png) | YES
 remove_photo() |   | `bool` | Remove your profile photo | YES
@@ -106,6 +107,7 @@ remove_photo() |   | `bool` | Remove your profile photo | YES
 Method | Return | Description | Login Required
 -------|--------|-------------|--------------
 account_info() | [Account](models?id=account) | Returns private info of your account | YES
+account_notifications() | [NotificationsStatus](models?id=notificationsstatus) | Returns status of current notifications settings | YES
 deactive_account() | `bool` | Deactivate your account and logout | YES
 
 
