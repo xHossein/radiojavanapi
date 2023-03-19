@@ -175,32 +175,32 @@ Get medias & users info as their [models](models).
 ### Song <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_song_by_url() | `url: HttpUrl` | [Song](models?id=song) | Returns song info by site url (e.g. `radiojavan.com/mp3s/mp3/...`) | NO
+get_song_by_url() | `url: HttpUrl` | [Song](models?id=song) | Returns song info by site url (e.g. `play.radiojavan.com/song/...`) | NO
 get_song_by_id() | `id: Union[int, str]` | [Song](models?id=song) | Returns song info by id | NO
 
 
 ### Video <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_video_by_url() | `url: HttpUrl` | [Video](models?id=video) | Returns video info by site url (e.g. `radiojavan.com/videos/video/...`) | NO
+get_video_by_url() | `url: HttpUrl` | [Video](models?id=video) | Returns video info by site url (e.g. `play.radiojavan.com/video/...`) | NO
 get_video_by_id() | `id: Union[int, str]` | [Video](models?id=video) | Returns video info by id | NO
 
 ### Story <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_story_by_url() | `url: HttpUrl` | [Story](models?id=story) | Returns story info by site url (e.g. `radiojavan.com/story/...`) | NO
+get_story_by_url() | `url: HttpUrl` | [Story](models?id=story) | Returns story info by site url (e.g. `play.radiojavan.com/story/...`) | NO
 get_story_by_hash_id() | `hash_id: str` | [Story](models?id=story) | Returns story by hash id | NO
 
 ### Podcast <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_podcast_by_url() | `url: HttpUrl` | [Podcast](models?id=podcast) | Returns podcast info by site url (e.g. `radiojavan.com/podcasts/podcast/...`) | NO
+get_podcast_by_url() | `url: HttpUrl` | [Podcast](models?id=podcast) | Returns podcast info by site url (e.g. `play.radiojavan.com/podcast/...`) | NO
 get_podcast_by_id() | `id: Union[int, str]` | [Podcast](models?id=podcast) | Returns podcast info by id | NO
 
 ### Album <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_album_by_url() | `url: HttpUrl` | [Album](models?id=album) | Returns album info by site url (e.g. `radiojavan.com/mp3s/album/...`) | NO
+get_album_by_url() | `url: HttpUrl` | [Album](models?id=album) | Returns album info by site url (e.g. `play.radiojavan.com/album/...`) | NO
 get_album_by_id() | `id: Union[int, str]` | [Album](models?id=album) | Returns album info by id | NO
 
 !> This id belong to one of album-tracks, usually first track.
@@ -208,21 +208,21 @@ get_album_by_id() | `id: Union[int, str]` | [Album](models?id=album) | Returns a
 ### Artist <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_artist_by_url() | `url: HttpUrl` | [Artist](models?id=artist) | Returns artist info by site url (e.g. `radiojavan.com/artist/...`) | NO
+get_artist_by_url() | `url: HttpUrl` | [Artist](models?id=artist) | Returns artist info by site url (e.g. `play.radiojavan.com/artist/...`) | NO
 get_artist_by_name() | `name: str` | [Artist](models?id=artist) | Returns artist info by id | NO
 
 ### Playlist <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_music_playlist_by_url() | `url: HttpUrl` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by site url (e.g. `radiojavan.com/playlists/playlist/mp3/...`) | NO
+get_music_playlist_by_url() | `url: HttpUrl` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by site url (e.g. `play.radiojavan.com/playlist/mp3/...`) | NO
 get_music_playlist_by_id() | `id: str` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by id | NO
-get_video_playlist_by_url() | `url: HttpUrl` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by site url (e.g. `radiojavan.com/playlists/playlist/video/...`) | NO
+get_video_playlist_by_url() | `url: HttpUrl` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by site url (e.g. `play.radiojavan.com/playlist/video/...`) | NO
 get_video_playlist_by_id() | `id: str` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by id | NO
 
 ### User <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_user_by_url() | `url: HttpUrl` | [User](models?id=user) | Returns user info by site url (e.g. `radiojavan.com/u/...`) | NO
+get_user_by_url() | `url: HttpUrl` | [User](models?id=user) | Returns user info by site url (e.g. `play.radiojavan.com/u/...`) | NO
 get_user_by_username() | `username: str` | [User](models?id=user) | Returns user info by username | NO
 get_user_followers() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user followers | NO
 get_user_following() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user following | NO
@@ -257,7 +257,6 @@ get_popular_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list o
 get_featured_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of featured podcasts | NO
 get_talk_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of talk podcasts | NO
 get_shows_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of shows podcasts | NO
-get_popular_artists() | `list[`[Artist](models?id=artist)`]` | Returns list of popular artists | NO
 
 
 ## Others
