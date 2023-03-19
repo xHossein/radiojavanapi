@@ -84,15 +84,6 @@ class BrowseMixin(ArtistMixin, AlbumMixin):
         """Get list of shows podcasts"""
         return self.__browse_req__('podcasts','shows')
 
-    def get_popular_artists(self) -> List[Artist]:
-        """Get list of popular artists"""
-        response = self.private_request('browse_items',params='v=2')
-        sections = response.json()['sections']
-        for index, section in enumerate(sections):
-            if 'title' in section and section['title'] == 'Popular Artists':
-                items = sections[index + 1]['items']
-                return [self.get_artist_by_name(artist['name']) for artist in items]
- 
     def get_radio_stream(self) -> Dict:
         """Get RJ radio stream links and short data of current and next songs"""
         songs = self.private_request('radio_nowplaying').json()
