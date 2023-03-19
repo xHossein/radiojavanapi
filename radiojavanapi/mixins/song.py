@@ -12,7 +12,7 @@ class SongMixin(PrivateRequest):
 
     def get_song_by_url(self, url: HttpUrl) -> Song:
         """
-        Get song info by site url (e.g. radiojavan.com/mp3s/mp3/...)
+        Get song info by site url (e.g. `play.radiojavan.com/song/...` or `play.radiojavan.com/redirect?r=radiojavan://mp3/...`)
 
         Arguments
         ----------

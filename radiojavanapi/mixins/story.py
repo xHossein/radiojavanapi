@@ -12,7 +12,7 @@ class StoryMixin(PrivateRequest):
 
     def get_story_by_url(self, url: HttpUrl) -> Story:
         """
-        Get story info by site url (e.g. radiojavan.com/story/...)
+        Get story info by site url (e.g. `play.radiojavan.com/story/1QVwK40x` or `rj.app/story/1QVwK40x`)
 
         Arguments
         ----------

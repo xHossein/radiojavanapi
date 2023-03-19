@@ -9,7 +9,7 @@ from urllib.parse import quote_plus
 class ArtistMixin(PrivateRequest):
     def get_artist_by_url(self, url: HttpUrl) -> Artist:
         """
-        Get artist info by site url (e.g. radiojavan.com/artist/...)
+        Get artist info by site url (e.g. `play.radiojavan.com/artist/...` or `play.radiojavan.com/redirect?r=radiojavan://artist/...`)
 
         Arguments
         ----------

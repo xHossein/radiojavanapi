@@ -9,7 +9,7 @@ from pydantic import HttpUrl
 class MusicPlayListMixin(PrivateRequest):
     def get_music_playlist_by_url(self, url: HttpUrl) -> MusicPlaylist:
         """
-        Get music playlist info by site url (e.g. radiojavan.com/playlists/playlist/mp3/...)
+        Get music playlist info by site url (e.g. `play.radiojavan.com/playlist/mp3/...` or `play.radiojavan.com/redirect?r=radiojavan://playlist/mp3/...`)
 
         Arguments
         ----------
@@ -178,7 +178,7 @@ class MusicPlayListMixin(PrivateRequest):
 class VideoPlayListMixin(PrivateRequest):
     def get_video_playlist_by_url(self, url: HttpUrl) -> VideoPlaylist:
         """
-        Get video playlist info by site url (e.g. radiojavan.com/playlists/playlist/video/...)
+        Get video playlist info by site url (e.g. `play.radiojavan.com/playlist/video/...` or `play.radiojavan.com/redirect?r=radiojavan://playlist/video/...`)
 
         Arguments
         ----------

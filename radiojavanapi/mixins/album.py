@@ -9,7 +9,7 @@ from pydantic import HttpUrl
 class AlbumMixin(SearchMixin):
     def get_album_by_url(self, url: HttpUrl) -> Album:
         """
-        Get album info by site url (e.g. radiojavan.com/mp3s/album/...)
+        Get album info by site url (e.g. `play.radiojavan.com/album/...` or `play.radiojavan.com/redirect?r=radiojavan://mp3_album/...`)
 
         Arguments
         ----------

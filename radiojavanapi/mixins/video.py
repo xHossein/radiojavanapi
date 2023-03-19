@@ -12,7 +12,7 @@ class VideoMixin(PrivateRequest):
 
     def get_video_by_url(self, url: HttpUrl) -> Video:
         """
-        Get video info by site url (e.g. radiojavan.com/videos/video/...)
+        Get video info by site url (e.g. `play.radiojavan.com/video/...` or `play.radiojavan.com/redirect?r=radiojavan://video/...`)
 
         Arguments
         ----------

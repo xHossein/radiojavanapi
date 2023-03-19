@@ -9,7 +9,7 @@ from typing import List
 class UserMixin(PrivateRequest):
     def get_user_by_url(self, url: HttpUrl) -> User:
         """
-        Get user info by site url (e.g. radiojavan.com/u/...)
+        Get user info by site url (e.g. `play.radiojavan.com/u/...` or `play.radiojavan.com/redirect?r=radiojavan://user/...`)
 
         Arguments
         ----------

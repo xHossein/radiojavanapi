@@ -12,7 +12,7 @@ class PodcastMixin(PrivateRequest):
 
     def get_podcast_by_url(self, url: HttpUrl) -> Podcast:
         """
-        Get podcast info by site url (e.g. radiojavan.com/podcasts/podcast/...)
+        Get podcast info by site url (e.g. `play.radiojavan.com/podcast/...` or `play.radiojavan.com/redirect?r=radiojavan://podcast/...`)
 
         Arguments
         ----------
