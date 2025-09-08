@@ -126,6 +126,8 @@ def extract_music_playlist(data) -> MusicPlaylist:
     data['has_custom_photo'] = data.pop('custom_photo')
     data["sync"] = True if data.pop('sync', None) else False
     data["songs"] = [extract_song(song) for song in data.pop('items',[])]
+    data.setdefault('following', False)
+    data.setdefault('followers_count', 0) 
     return MusicPlaylist(**data)
 
 def extract_short_user(data) -> Story:
@@ -157,3 +159,4 @@ def extract_my_playlists(data):
     
 def extract_notifications_status(data) -> NotificationsStatus:
     return NotificationsStatus(**data)
+
