@@ -5,10 +5,10 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text(encoding='utf-8')
 
 requirements = [
-    'requests==2.25.1',
+    'requests==2.32.5',
     'requests-toolbelt==0.9.1',
     'PySocks==1.7.1',
-    'pydantic==1.8.1'
+    'pydantic==2.11.9'
 ]
 
 setup(
@@ -28,7 +28,7 @@ setup(
     python_requires=">=3.7",
     include_package_data=True,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -36,5 +36,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ]
 )
