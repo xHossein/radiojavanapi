@@ -83,7 +83,7 @@ class AccountMixin(AuthMixin, UserMixin):
 
         Arguments
         ----------
-            new_music: Send occasional email notifications new music.
+            new_music: Send email notifications about new music.
             followed_artists : Send email notifications about artists that you follow.
             
         Returns

@@ -26,7 +26,7 @@ client.set_proxy({
             })
 
 song = client.get_song_by_url(
-            'https://www.radiojavan.com/mp3s/mp3/Sijal-Baz-Mirim-Baham-(Ft-Sami-Low)')
+            'https://play.radiojavan.com/song/sijal-baz-mirim-baham-(ft-sami-low)')
 
 print(f"""
         Name: {song.name}
