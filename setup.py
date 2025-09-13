@@ -6,14 +6,14 @@ README = (HERE / "README.md").read_text(encoding='utf-8')
 
 requirements = [
     'requests==2.32.5',
-    'requests-toolbelt==0.9.1',
+    'requests-toolbelt==1.0.0',
     'PySocks==1.7.1',
     'pydantic==2.11.9'
 ]
 
 setup(
     name='radiojavanapi',
-    version='0.6.0',
+    version='0.6.1',
     author='xHossein',
     license='MIT',
     url='https://github.com/xHossein/radiojavanapi',
