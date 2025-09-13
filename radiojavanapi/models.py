@@ -3,18 +3,18 @@ from pydantic import BaseModel, HttpUrl
 
 class ShortUser(BaseModel):
     thumbnail: HttpUrl
-    username: Optional[str]
+    username: Optional[str] = None
     display_name: str
-    share_link: Optional[HttpUrl]
+    share_link: Optional[HttpUrl] = None
 
 class ShortData(BaseModel):
     id: Union[int, str]
-    artist: Optional[str]
-    name: Optional[str]
+    artist: Optional[str] = ""
+    name: Optional[str] = ""
     created_at: str
-    permlink: Optional[str]
+    permlink: Optional[str] = ""
     photo: HttpUrl
-    photo_player: Optional[HttpUrl]
+    photo_player: Optional[HttpUrl] = ""
     share_link: HttpUrl
     title: str
     
@@ -41,17 +41,17 @@ class Story(BaseModel):
     likes_pretty: str
     user: ShortUser
     location: str
-    is_my_story: Optional[bool]
+    is_my_story: Optional[bool] = False
 
 class User(BaseModel):
     name: str
     firstname: str
     lastname: str
-    display_name: Optional[str]
-    username: Optional[str]
+    display_name: Optional[str] = ""
+    username: Optional[str] = ""
     share_link: HttpUrl
-    display_name: Optional[str]
-    bio: Optional[str]
+    display_name: Optional[str] = ""
+    bio: Optional[str] = ""
     default_photo: HttpUrl
     default_thumbnail: HttpUrl
     photo: HttpUrl
@@ -77,7 +77,7 @@ class Account(BaseModel):
     username: str
     share_link: HttpUrl
     email: str
-    bio: Optional[str]
+    bio: Optional[str] = ""
     default_photo: HttpUrl
     default_thumbnail: HttpUrl
     has_subscription : bool
@@ -97,41 +97,41 @@ class RJBaseModel(BaseModel):
     created_at: str
     credit_tags: List[str] = []
     dislikes: int
-    hq_hls: Optional[HttpUrl]
+    hq_hls: Optional[HttpUrl] = ""
     hq_link: HttpUrl
     id: int
     likes: int
     link: HttpUrl
-    lq_hls: Optional[HttpUrl]
+    lq_hls: Optional[HttpUrl] = ""
     lq_link: HttpUrl
     permlink: str
     photo: HttpUrl
-    photo_player: Optional[HttpUrl]
+    photo_player: Optional[HttpUrl] = ""
     share_link: HttpUrl
     title: str
 
 class Song(RJBaseModel):
     artist: str
     name: str
-    item: Optional[str] # for playlist
-    album: Optional[str]
-    date: Optional[str]
+    item: Optional[Union[str, int]] = [] # for playlist
+    album: Optional[str] = ""
+    date: Optional[str] = ""
     duration: float
-    hls_link: Optional[HttpUrl]
+    hls_link: Optional[HttpUrl] = ""
     thumbnail: HttpUrl
     plays: int
     downloads: int
-    credits: Optional[str]
+    credits: Optional[str] = ""
     artist_tags: List[str] = []
-    lyric: Optional[str]
+    lyric: Optional[str] = ""
     related_songs: List[ShortData] = []
     stories: List[Story] = []
 
 class Video(RJBaseModel):
     artist: str
     name: str
-    item: Optional[str] # for playlist
-    date: Optional[str]
+    item: Optional[Union[str, int]] = [] # for playlist
+    date: Optional[str] = ""
     views: int
     artist_tags: List[str] = []
     related_videos: List[ShortData] = []
@@ -141,11 +141,11 @@ class Podcast(RJBaseModel):
     short_date: str
     is_talk: bool
     duration: float
-    hls_link: Optional[HttpUrl]
+    hls_link: Optional[HttpUrl] = ""
     thumbnail: HttpUrl
     plays: int
-    show_permlink: Optional[str]
-    tracklist: Optional[str]
+    show_permlink: Optional[str] = ""
+    tracklist: Optional[str] = []
     related_podcasts: List[ShortData] = []
 
 class Artist(BaseModel):
@@ -190,13 +190,13 @@ class MusicPlaylist(BaseModel):
     last_updated_at: str
     share_link: HttpUrl
     followers: int
-    following: Optional[bool] # login required
-    sync: Optional[bool] # login required
+    following: Optional[bool] = False # login required
+    sync: Optional[bool] = False # login required
     is_public: bool
     is_my_playlist: bool
     photo: HttpUrl
     has_custom_photo: bool
-    photo_player: Optional[HttpUrl]
+    photo_player: Optional[HttpUrl] = ""
     thumbnail: HttpUrl
     songs: List[Song] = []
 
@@ -209,12 +209,12 @@ class VideoPlaylist(BaseModel):
     share_link: HttpUrl
     is_my_playlist: bool
     photo: HttpUrl
-    photo_player: Optional[HttpUrl]
+    photo_player: Optional[HttpUrl] = ""
     thumbnail: HttpUrl
     videos: List[Video] = []
 
 class Album(BaseModel):
-    id: str
+    id: Union[str, int]
     created_at: str
     date: str
     tracks: List[Song] = []
