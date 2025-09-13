@@ -3,11 +3,11 @@
 [![Downloads](https://pepy.tech/badge/radiojavanapi)](https://pepy.tech/project/radiojavanapi)
 
 # radiojavanapi
-**radiojavanapi** is a Python library for accessing RadioJavan's features. With this library you can create Telegram Bots with ease and simplicity.
+**radiojavanapi** is a Python library and wrapper for RadioJavan's API, enabling developers to create bots, streaming applications, download tools, and automation scripts with minimal effort.
 
 Support Python >= 3.7
 
-RadioJavan API valid for 19 March 2023 (last reverse-engineering check)
+RadioJavan API valid for 13 September 2025 (last reverse-engineering check)
 
 ## Features
 * Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
@@ -42,7 +42,7 @@ from radiojavanapi import Client
 # Create a Client instance and get a song info. 
 client = Client()
 song = client.get_song_by_url(
-            'https://www.radiojavan.com/mp3s/mp3/Sijal-Baz-Mirim-Baham-(Ft-Sami-Low)')
+            'https://play.radiojavan.com/song/sijal-baz-mirim-baham-(ft-sami-low)')
 
 print(f"""
         Name: {song.name}

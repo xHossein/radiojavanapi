@@ -5,7 +5,7 @@
 [![Downloads](https://pepy.tech/badge/radiojavanapi)](https://pepy.tech/project/radiojavanapi)
 <a class="github-button" href="https://github.com/xHossein/radiojavanapi" data-icon="octicon-star" data-show-count="true" aria-label="Star xHossein/radiojavanapi on GitHub">Star</a>
 
-**radiojavanapi** is a Python library for accessing RadioJavan's features. With this library you can create Telegram Bots with ease and simplicity.
+**radiojavanapi** is a Python library and wrapper for RadioJavan's API, enabling developers to create bots, streaming applications, download tools, and automation scripts with minimal effort.
 
 ## Features
 
