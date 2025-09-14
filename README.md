@@ -1,6 +1,6 @@
-[![PyPI version](https://badge.fury.io/py/radiojavanapi.svg)](https://badge.fury.io/py/radiojavanapi)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/xHossein/radiojavanapi/blob/master/LICENSE)
-[![Downloads](https://pepy.tech/badge/radiojavanapi)](https://pepy.tech/project/radiojavanapi)
+![PyPI - Version](https://img.shields.io/pypi/v/radiojavanapi)
+![GitHub License](https://img.shields.io/github/license/xhossein/radiojavanapi)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/radiojavanapi)
 
 # radiojavanapi
 **radiojavanapi** is a Python library and wrapper for RadioJavan's API, enabling developers to create bots, streaming applications, download tools, and automation scripts with minimal effort.
