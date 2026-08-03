@@ -84,15 +84,6 @@ class BrowseMixin(ArtistMixin, AlbumMixin):
         """Get list of shows podcasts"""
         return self.__browse_req__('podcasts','shows')
 
-    def get_radio_stream(self) -> Dict:
-        """Get RJ radio stream links and short data of current and next songs"""
-        songs = self.private_request('radio_nowplaying').json()
-        return {
-                'links': self.private_request('streams').json(),
-                'current_song': songs[0],
-                'next_songs': songs[1:]
-                }
-
     def get_tv_stream(self) -> str:
         """Get RJ tv stream link"""
         return self.private_request('app_config').json()['config']['tv']['hls']

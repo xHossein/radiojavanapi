@@ -268,4 +268,3 @@ Method | Return | Description | Login Required
 -------|-----------|-------------|--------------
 get_trending_searches() | `list[str]` | Returns list of trending searches | NO
 get_tv_stream() | `str` | Returns RJ tv stream link | NO
-get_radio_stream() | `dict` | Returns RJ radio stream links and short data of current and next songs | NO
