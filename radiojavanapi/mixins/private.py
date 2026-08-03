@@ -59,7 +59,7 @@ class PrivateRequest():
             if msg:
                 if 'is too long' in msg:
                     raise LongString(msg)
-                elif 'Invalid email' in msg:
+                elif 'Invalid email' in msg or 'The email or password doesn\'t look right' in msg:
                     raise BadCredentials(msg)
                 elif 'only contain letters' in msg:
                     raise InvalidName(msg)
