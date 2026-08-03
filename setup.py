@@ -5,10 +5,10 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text(encoding='utf-8')
 
 requirements = [
-    'requests==2.32.5',
+    'requests==2.34.2',
     'requests-toolbelt==1.0.0',
     'PySocks==1.7.1',
-    'pydantic==2.11.9'
+    'pydantic==2.13.4'
 ]
 
 setup(
@@ -38,5 +38,8 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
     ]
 )
