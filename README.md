@@ -3,25 +3,25 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/radiojavanapi)
 
 # radiojavanapi
-**radiojavanapi** is a Python library and wrapper for RadioJavan's API, enabling developers to create bots, streaming applications, download tools, and automation scripts with minimal effort.
+**radiojavanapi** is a Python library and wrapper for the RadioJavan API. It lets you build bots, streaming applications, download tools, and automation scripts with minimal effort.
 
-Support Python >= 3.7
+Requires Python >= 3.7
 
-RadioJavan API valid for 3 August 2026 (last reverse-engineering check)
+The RadioJavan API was last reverse-engineered and verified on 3 August 2026.
 
 ## Features
-* Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
-* Login by email and password
+* Get full info for a Song, Video, Podcast, Story, Playlist, Artist, Album, or User, as well as your own Account
+* Log in with an email and password
 * Sign up to RadioJavan
-* Like and Unlike a Song, Video, Podcast and Story
-* Follow and Unfollow a Artist, User or MusicPlaylist
-* Get followers and following of a user
-* Create, Rename and Delete a playlist
-* Add song or video to playlist or Remove from it
-* Edit and Deactive account
-* Upload and Remove profile photo
-* Search and get trending, popular and ... medias\
-and much more else
+* Like and unlike a Song, Video, Podcast, or Story
+* Follow and unfollow an Artist, User, or MusicPlaylist
+* Get a user's followers and following
+* Create, rename, and delete playlists
+* Add a song or video to a playlist, or remove it
+* Edit and deactivate your account
+* Upload and remove your profile photo
+* Search, and get trending, popular, and featured media
+* And much more
 
 ## Installation
 **From PyPI**
@@ -29,7 +29,7 @@ and much more else
 pip install radiojavanapi
 ```
 
-**From Github**
+**From GitHub**
 ```
 pip install git+https://github.com/xHossein/radiojavanapi@master
 ```
@@ -39,7 +39,7 @@ pip install git+https://github.com/xHossein/radiojavanapi@master
 ```python
 from radiojavanapi import Client
 
-# Create a Client instance and get a song info. 
+# Create a Client instance and get song info. 
 client = Client()
 song = client.get_song_by_url(
             'https://play.radiojavan.com/song/sijal-baz-mirim-baham-(ft-sami-low)')
@@ -62,11 +62,11 @@ HQ-Link: https://host2.mediacon-rj.app/media/mp3/aac-256/99926-cf9dd3814907dbb.m
 </details>
 
 ## Documentation
-You can find the documentation [here](https://xhossein.github.io/radiojavanapi/).
+The documentation is available [here](https://xhossein.github.io/radiojavanapi/).
 
 ## Support
 
-- Create a [GitHub issue](https://github.com/xHossein/radiojavanapi/issues) for bug reports, feature requests, or questions
+- Open a [GitHub issue](https://github.com/xHossein/radiojavanapi/issues) for bug reports, feature requests, or questions
 - Add a ⭐️ [star on GitHub](https://github.com/xHossein/radiojavanapi) to support the project!
 
 
