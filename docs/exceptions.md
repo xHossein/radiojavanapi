@@ -3,23 +3,23 @@
 ## Common Exceptions
 Exception | Base | Description
 ----------|------|------------
-ClientError | Exception | Base Exception for RadioJavan calls
-ClientJSONDecodeError | ClientError | JSON Exception
-ClientConnectionError | ClientError | Raised due to network connectivity-related issues
-ClientLoginRequired | ClientError | Raised when RadioJavan required Login
+ClientError | Exception | Base exception for all RadioJavan calls
+ClientJSONDecodeError | ClientError | Raised when the API response is not valid JSON
+ClientConnectionError | ClientError | Raised on network connectivity issues
+ClientLoginRequired | ClientError | Raised when a method requires you to be logged in
 
 
 ## Private Exceptions
 Exception | Base | Description
 ----------|------|------------
-PrivateError | ClientError | Base Exception for Private calls
-BadCredentials | PrivateError | Raised when email or password is wrong (login)
-InvalidName | PrivateError | Raised when firstname or lastname contains digits (edit account)
-LongString | PrivateError | Raised when string is too long (edit account)
-EmailExists | PrivateError | Raised when email used by another account (edit account)
-UsernameExists | PrivateError | Raised when username used by another account (edit account)
-DuplicatePassword | PrivateError | Raised when a duplicate password is provided (edit account)
-DuplicateName | PrivateError | Raised when a duplicate name is provided for playlist (create or rename playlist)
+PrivateError | ClientError | Base exception for private (authenticated) calls
+BadCredentials | PrivateError | Raised when the email or password is wrong (login)
+InvalidName | PrivateError | Raised when the first or last name contains digits (edit account)
+LongString | PrivateError | Raised when a string is too long (edit account)
+EmailExists | PrivateError | Raised when the email is already used by another account (edit account)
+UsernameExists | PrivateError | Raised when the username is already used by another account (edit account)
+DuplicatePassword | PrivateError | Raised when the new password is the same as the current one (edit account)
+DuplicateName | PrivateError | Raised when a playlist with that name already exists (create or rename playlist)
 InvalidMediaId | PrivateError | Raised when an invalid media id is provided (like, follow, ...)
 InvalidEmail | PrivateError | Raised when an invalid email is provided
-UnknownError | PrivateError | Raised when get unknown message (new message from radiojavan)
+UnknownError | PrivateError | Raised when the API returns an unrecognized error message

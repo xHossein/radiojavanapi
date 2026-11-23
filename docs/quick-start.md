@@ -7,7 +7,7 @@
 pip install radiojavanapi
 ```
 
-**From Github**
+**From GitHub**
 ```
 pip install git+https://github.com/xHossein/radiojavanapi@master
 ```
@@ -18,11 +18,11 @@ pip install git+https://github.com/xHossein/radiojavanapi@master
 ```python
 from radiojavanapi import Client
 
-# Create a Client instance. and set a proxy (Optional)
+# Create a Client instance. Setting a proxy is optional.
 client = Client()
 client.set_proxy({
-            'http':'socks5://127.0.0.1:8087'
-            'https':'socks5://127.0.0.1:8087'
+            'http': 'socks5://127.0.0.1:8087',
+            'https': 'socks5://127.0.0.1:8087'
             })
 
 song = client.get_song_by_url(
@@ -49,4 +49,4 @@ HQ-Link: https://host2.mediacon-rj.app/media/mp3/aac-256/99926-cf9dd3814907dbb.m
 ```
 </details>
 
-!> Please note that `set_proxy` only gets proxy as dict.
+!> `set_proxy()` only accepts a `dict` as its argument. If you do not need a proxy, skip this call entirely.

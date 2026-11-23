@@ -1,7 +1,7 @@
 # Methods
 
 ## Authentication
-For [Actions](methods?id=actions) and [Account](methods?id=account) methods, you must have an account.
+The [Actions](methods?id=actions) and [Account](methods?id=account) methods require an account.
 
 ### Login
 Arguments:
@@ -20,12 +20,12 @@ client = Client()
 try:
     client.login("YOUR EMAIL", "YOUR PASSWORD")
 except BadCredentials:
-    # raise due to wrong email or password
-    # do something
+    # Raised when the email or password is wrong
+    # Handle the error here
     pass
 
 song = client.get_song_by_url(
-            'https://www.radiojavan.com/mp3s/mp3/Sijal-Baz-Mirim-Baham-(Ft-Sami-Low)')
+            'https://play.radiojavan.com/song/sijal-baz-mirim-baham-(ft-sami-low)')
 
 print(client.like_song(song.id))
 print(client.follow_artist(song.artist))
@@ -45,12 +45,12 @@ Arguments:
 
 | Name | Type | Description
 -------|------|------------
-`firstname` | `str` | Your account firstname
-`lastname` | `str` | Your account lastname
+`firstname` | `str` | Your account first name
+`lastname` | `str` | Your account last name
 `username` | `str` | Your account username
 `email` | `str` | Your account email
 `password` | `str` | Your account password
-`auto_login` | `bool` | Login to account after sign up
+`auto_login` | `bool` | Whether to log in after signing up
 
 Example:
 ```python
@@ -60,12 +60,18 @@ client = Client()
 client.signup("YOUR FIRSTNAME", "YOUR LASTNAME", "YOUR USERNAME", "YOUR EMAIL", "YOUR PASSWORD", True)
 ```
 
-### Save & Load session
+### Logout
+
+```python
+clientObj.logout()
+```
+
+### Save & Load Session
 You can save your session like this:
 ```python
 clientObj.save_session('./myaccount')
 ```
-And you can load your session as well to avoid many logins:
+And load it later, so you don't have to log in every time:
 ```python
 clientObj.load_session('./myaccount')
 ```
@@ -73,48 +79,48 @@ clientObj.load_session('./myaccount')
 ## Account
 All account methods require authentication.
 
-?> **Radiojavanapi Docs:** Check [here](methods?id=authentication) for login or sign up.
+?> **radiojavanapi docs:** See [Authentication](methods?id=authentication) for login and sign-up.
 
 ### Activity
-- Get list of:
-    - Your followers & following
-    - Song & video you've liked befor
-    - Artist you're following now.
+- Get lists of:
+    - Your followers and the accounts you follow
+    - Songs and videos you've liked before
+    - Artists you currently follow
 
 Method | Return | Description | Login Required
 -------|------------|-------------|--------------
-liked_songs() | `list[`[Song](models?id=song)`]` | Returns list of songs you've liked | YES
-liked_videos() | `list[`[Video](models?id=video)`]` | Returns list of videos you've liked | YES
-following_artists() | `list[str]` | Returns list of artist names which you've followed | YES
-my_followers() | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of your followers | YES
-my_following() | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of your following| YES
-my_playlists() | [MyPlaylists](models?id=myplaylists) | Returns your video & music playlist's | YES
+liked_songs() | `list[`[Song](models?id=song)`]` | Returns the songs you've liked | YES
+liked_videos() | `list[`[Video](models?id=video)`]` | Returns the videos you've liked | YES
+following_artists() | `list[str]` | Returns the names of artists you follow | YES
+my_followers() | `list[`[ShortUser](models?id=shortuser)`]` | Returns your followers | YES
+my_following() | `list[`[ShortUser](models?id=shortuser)`]` | Returns the accounts you follow | YES
+my_playlists() | [MyPlaylists](models?id=myplaylists) | Returns your video and music playlists | YES
 
 ### Update
 Update your account.
 
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-account_edit() | <ul><li>`(Optional) firstname: str`</li><br/><li>`(Optional) lastname: str`</li><br/><li>`(Optional) username: str`</li><br/><li>`(Optional) email: str`</li><br/><li>`(Optional) bio: str`</li></ul> | [Account](models?id=account) | Change profile data | YES
-account_notifications_update() | <ul><li>`(Optional) new_music: bool`</li><br/><li>`(Optional) followed_artists: bool`</li><br/></ul> | `bool` | Update your notifications settings | YES
-change_password() | `password: str`<br/>`(Your new passowrd)` | `bool` | Change your account password | YES
-upload_photo() | `photo_path: str` | `bool` | Upload your profile photo (only jpg/png) | YES
+account_edit() | <ul><li>`(Optional) firstname: str`</li><br/><li>`(Optional) lastname: str`</li><br/><li>`(Optional) username: str`</li><br/><li>`(Optional) email: str`</li><br/><li>`(Optional) bio: str`</li></ul> | [Account](models?id=account) | Change your profile data | YES
+account_notifications_update() | <ul><li>`(Optional) new_music: bool`</li><br/><li>`(Optional) followed_artists: bool`</li></ul> | `bool` | Update your notification settings | YES
+change_password() | `password: str`<br/>`(Your new password)` | `bool` | Change your account password | YES
+upload_photo() | `photo_path: str` | `bool` | Upload your profile photo (JPG/PNG only) | YES
 remove_photo() |   | `bool` | Remove your profile photo | YES
 
-!> To remove bio, pass an empty string.
+!> To remove your bio, pass an empty string.
 
 ### Others
 Method | Return | Description | Login Required
 -------|--------|-------------|--------------
-account_info() | [Account](models?id=account) | Returns private info of your account | YES
-account_notifications() | [NotificationsStatus](models?id=notificationsstatus) | Returns status of current notifications settings | YES
-deactive_account() | `bool` | Deactivate your account and logout | YES
+account_info() | [Account](models?id=account) | Returns your account's private info | YES
+account_notifications() | [NotificationsStatus](models?id=notificationsstatus) | Returns your current notification settings | YES
+deactive_account() | `bool` | Deactivate your account and log out | YES
 
 
 ## Actions
 All action methods require authentication.
 
-?> **Radiojavanapi Docs:** Check [here](methods?id=authentication) for login or sign up.
+?> **radiojavanapi docs:** See [Authentication](methods?id=authentication) for login and sign-up.
 
 ### Like & Unlike
 
@@ -129,30 +135,30 @@ unlike_story() | `story_id: Union[int, str]` | `bool` | Unlike a story | YES
 like_podcast() | `podcast_id: Union[int, str]` | `bool` | Like a podcast | YES
 unlike_podcast() | `podcast_id: Union[int, str]` | `bool` | Unlike a podcast | YES
 
-!> like methods return false if media had been liked already and unlike methods return false if media hadn't been liked before.
+!> Like methods return `False` if the media was already liked, and unlike methods return `False` if it wasn't liked in the first place.
 
 ### Follow & Unfollow
 
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-follow_artist() | `name: str` | `bool` | Follow a artist | YES
-unfollow_artist() | `name: str` | `bool` | Unfollow a artist | YES
+follow_artist() | `name: str` | `bool` | Follow an artist | YES
+unfollow_artist() | `name: str` | `bool` | Unfollow an artist | YES
 follow_user() | `username: str` | `bool` | Follow a user | YES
 unfollow_user() | `username: str` | `bool` | Unfollow a user | YES
-follow_music_playlist() | `id: str` | `bool` | Follow a music (song or mp3) playlist | YES
-unfollow_music_playlist() | `id: str` | `bool` | Unfollow a music (song or mp3) playlist | YES
+follow_music_playlist() | `id: str` | `bool` | Follow a music (song/mp3) playlist | YES
+unfollow_music_playlist() | `id: str` | `bool` | Unfollow a music (song/mp3) playlist | YES
 
-!> Pass exact artist name (on RJ api) as name 
+!> Pass the artist's exact name as it appears on the RadioJavan API.
 
-### Work with playlists
-- Create, rename or delete playlist
-- Add song or video to playlist
-- Remove song or video from playlist
+### Working with playlists
+- Create, rename, and delete playlists
+- Add a song or video to a playlist
+- Remove a song or video from a playlist
 
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-create_music_playlist() | <ul><li>`name: str`</li><br/><li>`song_id: Union[int, str]`</li></ul> | `str` | Create a music playlist and returns playlist id | YES
-create_video_playlist() | <ul><li>`name: str`</li><br/><li>`video_id: Union[int, str]`</li></ul> | `str` | Create a video playlist and returns playlist id | YES
+create_music_playlist() | <ul><li>`name: str`</li><br/><li>`song_id: Union[int, str]`</li></ul> | `str` | Create a music playlist and return its id | YES
+create_video_playlist() | <ul><li>`name: str`</li><br/><li>`video_id: Union[int, str]`</li></ul> | `str` | Create a video playlist and return its id | YES
 rename_music_playlist() | <ul><li>`id: str`</li><br/><li>`name: str`</li></ul> | `bool` | Rename your music playlist | YES
 rename_video_playlist() | <ul><li>`id: str`</li><br/><li>`name: str`</li></ul> | `bool` | Rename your video playlist | YES
 delete_music_playlist() | `id: str` | `bool` | Delete your music playlist | YES
@@ -162,109 +168,109 @@ add_to_video_playlist() | <ul><li>`id: str`</li><br/><li>`video_id: Union[int, s
 remove_from_music_playlist() | <ul><li>`id: str`</li><br/><li>`song_id: Union[int, str]`</li></ul> | `bool` | Remove a song from your music playlist | YES
 remove_from_video_playlist() | <ul><li>`id: str`</li><br/><li>`video_id: Union[int, str]`</li></ul> | `bool` | Remove a video from your video playlist | YES
 
-!> In RadioJavan you can't create empty playlist , so you need a song/video id for creating playlist.
+!> RadioJavan does not allow empty playlists, so a song or video id is required when creating one.
 
-!> **Add methods**: returns false if song/video had been added already\
-**Remove methods**: returns false if song/video hadn't been added before
+!> **Add methods** return `False` if the song/video was already in the playlist.\
+**Remove methods** return `False` if the song/video wasn't in the playlist.
 
 ## Get Info
-Get medias & users info as their [models](models).
+Retrieve media and user info as their [models](models).
 
-> All methods work with out authentication too.
+> All of these methods work without authentication.
 
 ### Song <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_song_by_url() | `url: HttpUrl` | [Song](models?id=song) | Returns song info by site url (e.g. `play.radiojavan.com/song/...`) | NO
+get_song_by_url() | `url: HttpUrl` | [Song](models?id=song) | Returns song info by site URL (e.g. `play.radiojavan.com/song/...`) | NO
 get_song_by_id() | `id: Union[int, str]` | [Song](models?id=song) | Returns song info by id | NO
 
 
 ### Video <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_video_by_url() | `url: HttpUrl` | [Video](models?id=video) | Returns video info by site url (e.g. `play.radiojavan.com/video/...`) | NO
+get_video_by_url() | `url: HttpUrl` | [Video](models?id=video) | Returns video info by site URL (e.g. `play.radiojavan.com/video/...`) | NO
 get_video_by_id() | `id: Union[int, str]` | [Video](models?id=video) | Returns video info by id | NO
 
 ### Story <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_story_by_url() | `url: HttpUrl` | [Story](models?id=story) | Returns story info by site url (e.g. `play.radiojavan.com/story/...`) | NO
-get_story_by_hash_id() | `hash_id: str` | [Story](models?id=story) | Returns story by hash id | NO
+get_story_by_url() | `url: HttpUrl` | [Story](models?id=story) | Returns story info by site URL (e.g. `play.radiojavan.com/story/...`) | NO
+get_story_by_hash_id() | `hash_id: str` | [Story](models?id=story) | Returns a story by its hash id | NO
 
 ### Podcast <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_podcast_by_url() | `url: HttpUrl` | [Podcast](models?id=podcast) | Returns podcast info by site url (e.g. `play.radiojavan.com/podcast/...`) | NO
+get_podcast_by_url() | `url: HttpUrl` | [Podcast](models?id=podcast) | Returns podcast info by site URL (e.g. `play.radiojavan.com/podcast/...`) | NO
 get_podcast_by_id() | `id: Union[int, str]` | [Podcast](models?id=podcast) | Returns podcast info by id | NO
 
 ### Album <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_album_by_url() | `url: HttpUrl` | [Album](models?id=album) | Returns album info by site url (e.g. `play.radiojavan.com/album/...`) | NO
+get_album_by_url() | `url: HttpUrl` | [Album](models?id=album) | Returns album info by site URL (e.g. `play.radiojavan.com/album/...`) | NO
 get_album_by_id() | `id: Union[int, str]` | [Album](models?id=album) | Returns album info by id | NO
 
-!> This id belong to one of album-tracks, usually first track.
+!> An album id belongs to one of its tracks, usually the first one.
 
 ### Artist <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_artist_by_url() | `url: HttpUrl` | [Artist](models?id=artist) | Returns artist info by site url (e.g. `play.radiojavan.com/artist/...`) | NO
-get_artist_by_name() | `name: str` | [Artist](models?id=artist) | Returns artist info by id | NO
+get_artist_by_url() | `url: HttpUrl` | [Artist](models?id=artist) | Returns artist info by site URL (e.g. `play.radiojavan.com/artist/...`) | NO
+get_artist_by_name() | `name: str` | [Artist](models?id=artist) | Returns artist info by name | NO
 
 ### Playlist <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_music_playlist_by_url() | `url: HttpUrl` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by site url (e.g. `play.radiojavan.com/playlist/mp3/...`) | NO
+get_music_playlist_by_url() | `url: HttpUrl` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by site URL (e.g. `play.radiojavan.com/playlist/mp3/...`) | NO
 get_music_playlist_by_id() | `id: str` | [MusicPlaylist](models?id=musicplaylist) | Returns music playlist info by id | NO
-get_video_playlist_by_url() | `url: HttpUrl` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by site url (e.g. `play.radiojavan.com/playlist/video/...`) | NO
+get_video_playlist_by_url() | `url: HttpUrl` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by site URL (e.g. `play.radiojavan.com/playlist/video/...`) | NO
 get_video_playlist_by_id() | `id: str` | [VideoPlaylist](models?id=videoplaylist) | Returns video playlist info by id | NO
 
 ### User <!-- {docsify-ignore} -->
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-get_user_by_url() | `url: HttpUrl` | [User](models?id=user) | Returns user info by site url (e.g. `play.radiojavan.com/u/...`) | NO
+get_user_by_url() | `url: HttpUrl` | [User](models?id=user) | Returns user info by site URL (e.g. `play.radiojavan.com/u/...`) | NO
 get_user_by_username() | `username: str` | [User](models?id=user) | Returns user info by username | NO
-get_user_followers() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user followers | NO
-get_user_following() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns list of user following | NO
+get_user_followers() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns a list of the user's followers | NO
+get_user_following() | `username: str` | `list[`[ShortUser](models?id=shortuser)`]` | Returns a list of the accounts the user follows | NO
 
 
 ## Search
-Search on RadioJavan and get results as [SearchResults](models?id=searchresults).
+Search RadioJavan and get results as [SearchResults](models?id=searchresults).
 
-> This method work with out authentication too.
+> This method works without authentication too.
 
 Method | Arguments | Return | Description | Login Required
 -------|----------|--------|-------------|--------------
-search() | `query: str` | [SearchResults](models?id=searchresults) | Returns search results object | NO
+search() | `query: str` | [SearchResults](models?id=searchresults) | Returns a search results object | NO
 
 ## Browse
-Everything you see in `Browse` tab in desktop application. like `trending`, `popular`, `featured`, `latest` and `...`.
+Everything you see under the `Browse` tab of the desktop application, such as `trending`, `popular`, `featured`, and `latest`.
 
-> All methods work with out authentication too.
+> All of these methods work without authentication too.
 
 Method | Return | Description | Login Required
 -------|--------|-------------|--------------
-get_latest_stories() | `list[`[Story](models?id=story)`]` | Returns list of latest stories | NO
-get_trending_songs() | `list[`[Song](models?id=song)`]` | Returns list of trending songs | NO
-get_popular_songs() | `list[`[Song](models?id=song)`]` | Returns list of popular songs | NO
-get_featured_songs() | `list[`[Song](models?id=song)`]` | Returns list of featured songs | NO
-get_latest_albums() | `list[`[Album](models?id=album)`]` | Returns list of latest albums | NO
-get_trending_videos() | `list[`[Video](models?id=video)`]` | Returns list of trending videos | NO
-get_popular_videos() | `list[`[Video](models?id=video)`]` | Returns list of popular videos | NO
-get_featured_videos() | `list[`[Video](models?id=video)`]` | Returns list of featured videos | NO
-get_latest_videos() | `list[`[Video](models?id=video)`]` | Returns list of latest videos | NO
-get_popular_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of popular podcasts | NO
-get_featured_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of featured podcasts | NO
-get_talk_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of talk podcasts | NO
-get_shows_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns list of shows podcasts | NO
+get_latest_stories() | `list[`[Story](models?id=story)`]` | Returns a list of the latest stories | NO
+get_trending_songs() | `list[`[Song](models?id=song)`]` | Returns a list of trending songs | NO
+get_popular_songs() | `list[`[Song](models?id=song)`]` | Returns a list of popular songs | NO
+get_featured_songs() | `list[`[Song](models?id=song)`]` | Returns a list of featured songs | NO
+get_latest_albums() | `list[`[Album](models?id=album)`]` | Returns a list of the latest albums | NO
+get_trending_videos() | `list[`[Video](models?id=video)`]` | Returns a list of trending videos | NO
+get_popular_videos() | `list[`[Video](models?id=video)`]` | Returns a list of popular videos | NO
+get_featured_videos() | `list[`[Video](models?id=video)`]` | Returns a list of featured videos | NO
+get_latest_videos() | `list[`[Video](models?id=video)`]` | Returns a list of the latest videos | NO
+get_popular_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns a list of popular podcasts | NO
+get_featured_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns a list of featured podcasts | NO
+get_talk_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns a list of talk podcasts | NO
+get_shows_podcasts() | `list[`[Podcast](models?id=podcast)`]` | Returns a list of show podcasts | NO
 
 
 ## Others
-Get stream links and ... .
+Stream links and other utilities.
 
-> All methods work with out authentication too.
+> All of these methods work without authentication too.
 
 Method | Return | Description | Login Required
 -------|-----------|-------------|--------------
-get_trending_searches() | `list[str]` | Returns list of trending searches | NO
-get_tv_stream() | `str` | Returns RJ tv stream link | NO
+get_trending_searches() | `list[str]` | Returns a list of trending searches | NO
+get_tv_stream() | `str` | Returns the RadioJavan TV stream link | NO

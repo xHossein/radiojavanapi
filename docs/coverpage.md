@@ -1,8 +1,8 @@
-# radiojavanapi <small>0.7.0</small>
+# radiojavanapi <small id="rj-version">VersionNumber</small>
 
-> Fast and effective [RadioJavan](https://radiojavan.com/) API wrapper in python
+> Fast and effective [RadioJavan](https://radiojavan.com/) API wrapper for Python
 
-- Based on android & desktop applications
+- Based on the Android and desktop applications
 
 [Get Started](introduction)
 [GitHub](https://github.com/xHossein/radiojavanapi/)

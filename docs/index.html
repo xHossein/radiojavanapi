@@ -34,7 +34,25 @@
           depth      : 3,
           noData     : 'No results!',
           placeholder: 'Search...'
-      }
+      },
+      plugins: [
+        function (hook) {
+          var fetched = false;
+          hook.doneEach(function () {
+            if (fetched) return;
+            var el = document.getElementById('rj-version');
+            if (!el) return;
+            fetched = true;
+            fetch('https://pypi.org/pypi/radiojavanapi/json')
+              .then(function (res) { return res.json(); })
+              .then(function (data) {
+                var version = data && data.info && data.info.version;
+                if (version) el.textContent = version;
+              })
+              .catch(function () { });
+          });
+        }
+      ]
     }
   </script>
   <!-- Docsify v4 -->

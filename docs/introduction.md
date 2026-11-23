@@ -5,26 +5,26 @@
 [![Downloads](https://pepy.tech/badge/radiojavanapi)](https://pepy.tech/project/radiojavanapi)
 <a class="github-button" href="https://github.com/xHossein/radiojavanapi" data-icon="octicon-star" data-show-count="true" aria-label="Star xHossein/radiojavanapi on GitHub">Star</a>
 
-**radiojavanapi** is a Python library and wrapper for RadioJavan's API, enabling developers to create bots, streaming applications, download tools, and automation scripts with minimal effort.
+**radiojavanapi** is a Python library and wrapper for the RadioJavan API. It lets you build bots, streaming applications, download tools, and automation scripts with minimal effort.
 
 ## Features
 
-* Get full info of a Song, Video, Podcast, Story, Playlist, Artist, Album, User and your Account
-* Login by email and password
+* Get full info for a Song, Video, Podcast, Story, Playlist, Artist, Album, or User, as well as your own Account
+* Log in with an email and password
 * Sign up to RadioJavan
-* Like and Unlike a Song, Video, Podcast and Story
-* Follow and Unfollow a Artist, User or MusicPlaylist
-* Get followers and following of a user
-* Create, Rename and Delete a playlist
-* Add song or video to playlist or Remove from it
-* Edit and Deactive account
-* Upload and Remove profile photo
-* Search and get trending, popular and ... medias\
-and much more else
+* Like and unlike a Song, Video, Podcast, or Story
+* Follow and unfollow an Artist, User, or MusicPlaylist
+* Get a user's followers and following
+* Create, rename, and delete playlists
+* Add a song or video to a playlist, or remove it
+* Edit and deactivate your account
+* Upload and remove your profile photo
+* Search, and get trending, popular, and featured media
+* And much more
 
 ## Support
 
-- Create a [GitHub issue](https://github.com/xHossein/radiojavanapi/issues) for bug reports, feature requests, or questions
+- Open a [GitHub issue](https://github.com/xHossein/radiojavanapi/issues) for bug reports, feature requests, or questions
 - Add a ⭐️ [star on GitHub](https://github.com/xHossein/radiojavanapi) to support the project!
 
 ## License
