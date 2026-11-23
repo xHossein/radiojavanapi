@@ -57,6 +57,7 @@ def extract_podcast(data) -> Podcast:
     data["likes"] = to_int(data.pop('likes'))
     data["dislikes"] = to_int(data.pop('dislikes'))
     data["related_podcasts"] = [extract_short_data(podcast, Podcast) for podcast in data.pop('related',[])]
+    data["tracklist_synced"] = data.pop('tracklist_synced', [])
     return Podcast(**data)
 
 def extract_artist(data) -> Artist:

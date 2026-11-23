@@ -187,14 +187,14 @@ Available attributes:
 `duration` | `float` | Episode duration in seconds
 `thumbnail` | `HttpUrl` | Thumbnail URL
 `tracklist` | `Optional[str]` | Podcast track list (newline-separated text)
-`tracklist_synced` | `list[`[PodcastTrack](#podcasttrack)`]` | Time-synced track list
+`tracklist_synced` | `list[`[PodcastTrackSync](#podcasttracksync)`]` | Time-synced track list
 `related_podcasts` | `list[`[ShortData](#shortdata)`]` | Related podcasts
 
-## PodcastTrack
+## PodcastTrackSync
 This model represents one entry in a podcast's time-synced track list.
 
 ### Attributes <!-- {docsify-ignore} -->
-> Read-only values on a PodcastTrack object
+> Read-only values on a PodcastTrackSync object
 
 Available attributes:
 

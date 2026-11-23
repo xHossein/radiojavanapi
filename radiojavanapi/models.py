@@ -136,6 +136,11 @@ class Video(RJBaseModel):
     artist_tags: List[str] = []
     related_videos: List[ShortData] = []
 
+class PodcastTrackSync(BaseModel):
+    time: int
+    text: str
+    mp3: Optional[int] = None
+
 class Podcast(RJBaseModel):
     date: str
     short_date: str
@@ -146,6 +151,7 @@ class Podcast(RJBaseModel):
     plays: int
     show_permlink: Optional[str] = ""
     tracklist: Optional[str] = []
+    tracklist_synced: List[PodcastTrackSync] = []
     related_podcasts: List[ShortData] = []
 
 class Artist(BaseModel):
