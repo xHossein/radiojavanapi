@@ -7,7 +7,7 @@
 
 Requires Python >= 3.7
 
-The RadioJavan API was last reverse-engineered and verified on 3 August 2026.
+The RadioJavan API was last reverse-engineered and verified on 23 November 2026.
 
 ## Features
 * Get full info for a Song, Video, Podcast, Story, Playlist, Artist, Album, or User, as well as your own Account
